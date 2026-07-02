@@ -65,7 +65,7 @@
   .logo-upload-area { border: 2px dashed var(--paper-3); border-radius: 10px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; background: var(--paper); }
   .logo-upload-area:hover { border-color: var(--accent); background: var(--accent-light); }
   .logo-upload-area.has-logo { padding: 0.5rem; border-style: solid; border-color: var(--paper-3); }
-  .logo-upload-area img { max-height: 80px; max-width: 180px; object-fit: contain; display: block; margin: 0 auto; }
+  .logo-upload-area img { max-height: 100px; max-width: 200px; object-fit: contain; display: block; margin: 0 auto; }
   .logo-upload-area p { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
   .logo-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .logo-icon { font-size: 24px; color: var(--ink-4); }
@@ -101,8 +101,8 @@
   .inv-top-bar { background: var(--ink); height: 5px; }
   .inv-body { padding: 2rem; }
   .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; }
-  .inv-logo-area { max-width: 120px; }
-  .inv-logo-area img { max-height: 60px; max-width: 120px; object-fit: contain; }
+  .inv-logo-area { max-width: 200px; }
+  .inv-logo-area img { max-height: 100px; max-width: 200px; object-fit: contain; }
   .inv-logo-placeholder { width: 56px; height: 56px; background: var(--paper-2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--ink-4); border: 1px solid var(--paper-3); }
   .inv-meta { text-align: right; }
   .inv-title-text { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; line-height: 1; }
@@ -209,6 +209,7 @@
     .workspace { display: block; padding: 0; max-width: 100%; }
     .preview-panel { position: static; display: block !important; }
     .invoice-sheet { box-shadow: none; border: none; border-radius: 0; }
+    img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; max-width: 100%; }
     @page { margin: 0.5in; size: A4; }
   }
   .empty-state { text-align: center; padding: 2rem; color: var(--ink-4); font-size: 13px; }
@@ -1022,7 +1023,7 @@ async function downloadPDF() {
         .inv-top-bar{background:#0f0e0d;height:5px;}
         .inv-body{padding:2rem;font-family:'DM Sans',sans-serif;}
         .inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;}
-        .inv-logo-area{max-width:120px;} .inv-logo-area img{max-height:60px;max-width:120px;object-fit:contain;}
+        .inv-logo-area{max-width:200px;} .inv-logo-area img{max-height:100px;max-width:200px;object-fit:contain;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges;}
         .inv-logo-placeholder{width:56px;height:56px;background:#f2f0ec;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid #e8e4dc;}
         .inv-meta{text-align:right;}
         .inv-title-text{font-family:'DM Serif Display',serif;font-size:28px;color:#0f0e0d;letter-spacing:-0.02em;line-height:1;}
@@ -1073,12 +1074,12 @@ async function downloadPDF() {
     </div>`;
     await new Promise(r=>setTimeout(r,400));
     const element=renderZone.firstElementChild;
-    const canvas=await html2canvas(element,{scale:2,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',logging:false,width:794,windowWidth:794});
+    const canvas=await html2canvas(element,{scale:3,useCORS:true,allowTaint:true,backgroundColor:'#ffffff',logging:false,width:794,windowWidth:794});
     const {jsPDF}=window.jspdf;
     const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
     const pageW=210,pageH=297,imgW=pageW,imgH=(canvas.height*imgW)/canvas.width;
-    const imgData=canvas.toDataURL('image/jpeg',0.95);
-    if(imgH<=pageH) { pdf.addImage(imgData,'JPEG',0,0,imgW,imgH); }
+    const imgData=canvas.toDataURL('image/png');
+    if(imgH<=pageH) { pdf.addImage(imgData,'PNG',0,0,imgW,imgH); }
     else {
       let yO=0;
       while(yO<imgH) {
@@ -1086,7 +1087,7 @@ async function downloadPDF() {
         sc.width=canvas.width; sc.height=(slH/imgH)*canvas.height;
         sc.getContext('2d').drawImage(canvas,0,(yO/imgH)*canvas.height,canvas.width,sc.height,0,0,canvas.width,sc.height);
         if(yO>0) pdf.addPage();
-        pdf.addImage(sc.toDataURL('image/jpeg',0.95),'JPEG',0,0,imgW,slH);
+        pdf.addImage(sc.toDataURL('image/png'),'PNG',0,0,imgW,slH);
         yO+=pageH;
       }
     }
