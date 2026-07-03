@@ -213,6 +213,54 @@
     @page { margin: 0.5in; size: A4; }
   }
   .empty-state { text-align: center; padding: 2rem; color: var(--ink-4); font-size: 13px; }
+
+  /* ── HOW TO USE MODAL ── */
+  .htu-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
+  .htu-overlay.active { display: flex; }
+  .htu-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 720px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .htu-header { background: var(--ink); color: var(--paper); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+  .htu-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.02em; }
+  .htu-body { padding: 1.5rem 2rem 2rem; max-height: 75vh; overflow-y: auto; }
+  .htu-section { margin-bottom: 1.75rem; }
+  .htu-section:last-child { margin-bottom: 0; }
+  .htu-step-label { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--ink); color: var(--paper); border-radius: 50%; font-size: 11px; font-weight: 700; margin-right: 8px; flex-shrink: 0; }
+  .htu-section h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; display: flex; align-items: center; }
+  .htu-section p, .htu-section li { font-size: 13px; color: var(--ink-2); line-height: 1.7; }
+  .htu-section ul { padding-left: 1rem; margin-top: 4px; }
+  .htu-section li { margin-bottom: 4px; }
+  .htu-divider { border: none; border-top: 1px solid var(--paper-3); margin: 1.5rem 0; }
+  .htu-tip { background: var(--accent-light); border: 1px solid var(--accent); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--accent-dark); margin-top: 8px; }
+  .htu-tip strong { font-weight: 700; }
+  .htu-btn-row { display: flex; justify-content: center; padding: 1rem 1.5rem; border-top: var(--border); background: var(--paper); }
+
+  /* ── HISTORY PANEL ── */
+  .history-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
+  .history-overlay.active { display: flex; }
+  .history-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 980px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .history-header { background: var(--ink); color: var(--paper); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+  .history-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.02em; }
+  .history-header-actions { display: flex; gap: 8px; align-items: center; }
+  .history-close { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; }
+  .history-close:hover { background: rgba(255,255,255,0.2); }
+  .history-warning { background: #fff8e6; border-bottom: 1px solid #ffe0a0; padding: 10px 1.5rem; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #7a5c00; }
+  .history-warning strong { font-weight: 600; }
+  .history-toolbar { padding: 1rem 1.5rem; border-bottom: var(--border); display: flex; align-items: center; gap: 10px; background: var(--paper); flex-wrap: wrap; }
+  .history-search { flex: 1; min-width: 200px; padding: 8px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; border: 1px solid var(--paper-3); border-radius: 7px; outline: none; background: #fff; }
+  .history-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,169,110,0.15); }
+  .history-body { padding: 1.5rem; max-height: 60vh; overflow-y: auto; }
+  .history-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .history-table th { padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); border-bottom: 2px solid var(--ink); white-space: nowrap; }
+  .history-table td { padding: 9px 10px; border-bottom: 1px solid var(--paper-3); color: var(--ink-2); vertical-align: middle; }
+  .history-table tr:hover td { background: var(--paper); }
+  .history-table tr:last-child td { border-bottom: none; }
+  .history-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; }
+  .badge-pdf { background: #e8f0fe; color: #1a56db; }
+  .badge-print { background: #e8faf0; color: #1a7f5a; }
+  .badge-whatsapp { background: #e8fef0; color: #128c7e; }
+  .history-del-btn { background: none; border: none; cursor: pointer; color: var(--ink-4); font-size: 14px; padding: 2px 6px; border-radius: 4px; transition: all 0.15s; }
+  .history-del-btn:hover { background: #fff0ef; color: var(--red); }
+  .history-empty { text-align: center; padding: 3rem; color: var(--ink-4); }
+  .history-empty p { font-size: 14px; margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -221,33 +269,160 @@
 <div class="pdf-overlay" id="pdfOverlay"><div class="pdf-modal"><div class="pdf-spinner"></div><p>Generating your PDF…</p><small>This may take a few seconds</small></div></div>
 <div id="pdfRenderZone"></div>
 
+<!-- How to Use Modal -->
+<div class="htu-overlay" id="htuOverlay" onclick="if(event.target===this)closeHowToUse()">
+  <div class="htu-modal">
+    <div class="htu-header">
+      <h2>❓ How to Use InvoiceForge</h2>
+      <button class="history-close" onclick="closeHowToUse()">✕ Close</button>
+    </div>
+    <div class="htu-body">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">1</span>Set Up Your Business (One Time Only)</h3>
+        <p>Fill in your <strong>Business Name, Address, Email, Phone</strong> and <strong>GSTIN</strong> in the Business Details section. Upload your logo if you have one. Then click <strong>💾 Save My Business</strong> — your details will auto-fill every time you open the file. You never have to enter them again.</p>
+        <div class="htu-tip"><strong>Tip:</strong> Also fill in your Bank Details and UPI ID in the Notes & Payment section before saving. These will appear on every invoice automatically.</div>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">2</span>Fill in Invoice Info</h3>
+        <p>The <strong>Invoice Number</strong> is auto-generated in the format INV/2025-26/001 and increments automatically. The <strong>Invoice Date</strong> is set to today. Change either if needed.</p>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">3</span>Add Client Details</h3>
+        <p>Enter your client's <strong>Name, Email, Phone, Address</strong> and their <strong>GSTIN</strong> if they are a registered business. The PO/Reference Number is optional — use it if your client gave you a purchase order number.</p>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">4</span>Add Line Items</h3>
+        <p>Click <strong>+ Add line item</strong> for each product or service you are billing. For each item fill in:</p>
+        <ul>
+          <li><strong>Description</strong> — what you provided</li>
+          <li><strong>HSN/SAC code</strong> — optional, for GST compliance (e.g. 998314 for IT services)</li>
+          <li><strong>Type</strong> — Service or Goods</li>
+          <li><strong>Qty</strong> — quantity</li>
+          <li><strong>Unit Price</strong> — price per unit</li>
+        </ul>
+        <p style="margin-top:6px">Amount is calculated automatically. Use ▲▼ arrows to reorder items.</p>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">5</span>Set Tax & Discount</h3>
+        <p>In the <strong>Tax & Settings</strong> section:</p>
+        <ul>
+          <li>Choose <strong>Discount Type</strong> — Percentage or Flat Amount — and enter the value</li>
+          <li>Toggle <strong>GST Applicable</strong> on or off</li>
+          <li>Select <strong>IGST</strong> (inter-state) or <strong>CGST+SGST</strong> (intra-state supply)</li>
+          <li>Pick the GST slab — 0%, 5%, 12%, 18%, or 28%</li>
+          <li>Select <strong>Place of Supply</strong> (the state where service is delivered)</li>
+        </ul>
+        <div class="htu-tip"><strong>IGST or CGST+SGST?</strong> If your client is in a different state — use IGST. If same state as you — use CGST+SGST.</div>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">6</span>Download & Share</h3>
+        <ul>
+          <li><strong>PDF</strong> — downloads a high-quality PDF ready to email or print</li>
+          <li><strong>WhatsApp</strong> — downloads the PDF and opens WhatsApp with a pre-filled message. Attach the PDF and send.</li>
+          <li><strong>Print</strong> — prints directly from the browser</li>
+        </ul>
+        <div class="htu-tip"><strong>Every time you download or share</strong>, the invoice is automatically saved to your History.</div>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">7</span>History & Daily Export</h3>
+        <p>Click <strong>History</strong> in the top bar to see all invoices you have generated. At the end of each day, click <strong>Export to Excel</strong> inside History to download your full invoice register as a spreadsheet — date, client, amounts, GST, everything in one file.</p>
+        <div class="htu-tip"><strong>⚠️ Important:</strong> History is stored in this browser only. If you clear browser data it will be lost. Export to Excel daily to keep a permanent record.</div>
+      </div>
+
+      <hr class="htu-divider">
+
+      <div class="htu-section">
+        <h3><span class="htu-step-label">8</span>Backup & Restore (Advanced)</h3>
+        <p>Inside the <strong>History</strong> panel you will find two options — <strong>💾 Backup Data</strong> and <strong>📂 Restore Data</strong>. Use these only if you are switching to a new computer or a different browser.</p>
+        <ul>
+          <li><strong>Backup Data</strong> — downloads a small JSON file with your business profile, invoice counter, and settings</li>
+          <li><strong>Restore Data</strong> — uploads that file back to recover everything on the new device</li>
+        </ul>
+        <div class="htu-tip"><strong>For daily use you do not need these.</strong> Just Export to Excel from History at the end of each day and your records are safe.</div>
+      </div>
+
+    </div>
+    <div class="htu-btn-row">
+      <button class="btn btn-gold" onclick="closeHowToUse()" style="padding:10px 32px;font-size:13px">Got it — Start Invoicing →</button>
+    </div>
+  </div>
+</div>
+
+<!-- History Modal -->
+<div class="history-overlay" id="historyOverlay" onclick="handleOverlayClick(event)">
+  <div class="history-modal">
+    <div class="history-header">
+      <h2>📋 Invoice History</h2>
+      <div class="history-header-actions">
+        <button class="btn btn-gold" onclick="exportHistoryExcel()" style="font-size:12px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Export to Excel
+        </button>
+        <button class="history-close" onclick="exportBackup()" title="Download all settings as JSON backup">💾 Backup Data</button>
+        <button class="history-close" onclick="document.getElementById('importInput').click()" title="Restore from JSON backup">📂 Restore Data</button>
+        <button class="history-close" onclick="clearAllHistory()" style="color:#f5c6c2">🗑 Clear All</button>
+        <button class="history-close" onclick="closeHistory()">✕ Close</button>
+      </div>
+    </div>
+    <div class="history-warning">
+      <span style="font-size:18px">⚠️</span>
+      <div><strong>Your invoice history is stored in this browser only.</strong> Clearing browser data will permanently delete it. <strong>Export to Excel at the end of each day</strong> to keep a permanent record.</div>
+    </div>
+    <div class="history-toolbar">
+      <input class="history-search" type="text" id="historySearch" placeholder="Search by invoice no, client name…" oninput="renderHistory()">
+      <span id="historyCount" style="font-size:12px;color:var(--ink-3);white-space:nowrap"></span>
+    </div>
+    <div class="history-body">
+      <div id="historyContent"></div>
+    </div>
+  </div>
+</div>
+
 <nav class="topbar">
   <div class="topbar-brand">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     Invoice<span class="dot">Forge</span>
   </div>
   <div class="topbar-actions">
-    <button class="btn btn-ghost" onclick="exportBackup()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
+    <button class="btn btn-ghost" onclick="openHowToUse()" title="How to Use">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>How to Use
     </button>
-    <button class="btn btn-ghost" onclick="document.getElementById('importInput').click()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Import
+    <button class="btn btn-ghost" onclick="openHistory()" title="Invoice History">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>History
     </button>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importBackup(this)">
-    <button class="btn btn-ghost" onclick="clearForm()">
+    <button class="btn btn-ghost" onclick="clearForm()" title="Start new invoice">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>New
     </button>
-    <button class="btn btn-ghost" onclick="saveDraft()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Draft
+    <button class="btn btn-ghost" onclick="saveDraft()" title="Save current draft">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save
     </button>
-    <button class="btn btn-ghost" onclick="duplicateInvoice()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Duplicate
+    <button class="btn btn-ghost" onclick="duplicateInvoice()" title="Duplicate this invoice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
     </button>
-    <button class="btn btn-green" onclick="shareWhatsApp()">
+    <button class="btn btn-green" onclick="shareWhatsApp()" title="Download PDF and share on WhatsApp">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.121 1.524 5.852L.059 23.54a.5.5 0 0 0 .613.612l5.687-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.538-5.363-1.473l-.384-.232-3.982 1.026 1.026-3.982-.233-.384A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>WhatsApp
     </button>
-    <button class="btn btn-gold" onclick="downloadPDF()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF
+    <button class="btn btn-gold" onclick="downloadPDF()" title="Download invoice as PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PDF
     </button>
   </div>
 </nav>
@@ -654,10 +829,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
   loadBusinessProfile();
 
+  // Show How to Use on first ever visit
+  if (!localStorage.getItem('invoiceforge_visited')) {
+    localStorage.setItem('invoiceforge_visited', '1');
+    setTimeout(() => openHowToUse(), 600);
+  }
+
   const draft = localStorage.getItem('invoiceforge_draft');
-  if (draft) { try { loadDraftData(JSON.parse(draft)); showToast('Draft restored','info'); return; } catch(e){} }
+  if (draft) { try { loadDraftData(JSON.parse(draft)); showToast('Draft restored','info'); checkTodayReminder(); return; } catch(e){} }
   addItem('', 1, '', 'Service');
   updatePreview();
+  checkTodayReminder();
 });
 
 // ── DRAFT ──────────────────────────────────────────
@@ -728,6 +910,7 @@ function shareWhatsApp() {
   const gstOn=gstIsOn(), gstRate=gstOn?(parseFloat(getVal('gstRate'))||0):0;
   const total=taxable+taxable*(gstRate/100);
   const msg=`Dear ${clientName},\n\nPlease find attached the invoice from *${bizName}*:\n\n📄 Invoice No: *${invNo}*\n📅 Date: ${date}\n💰 Amount Due: *${fmtINR(total,s)}*\n\nKindly arrange payment at your earliest convenience.\n\nThank you for your business.`;
+  recordHistory('WhatsApp');
   downloadPDF().then(() => {
     setTimeout(() => window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank'), 800);
   });
@@ -1012,6 +1195,7 @@ async function downloadPDF() {
   if (!validateInvoice()) return;
   updatePreview();
   saveInvoiceSeq(document.getElementById('invoiceNo').value);
+  recordHistory('PDF');
   document.getElementById('pdfOverlay').classList.add('active');
   try {
     const invoiceHTML=document.getElementById('invoiceSheet').innerHTML;
@@ -1100,6 +1284,7 @@ async function downloadPDF() {
 function printInvoice() {
   if (!validateInvoice()) return;
   saveInvoiceSeq(document.getElementById('invoiceNo').value);
+  recordHistory('Print');
   updatePreview();
   setTimeout(()=>window.print(),100);
 }
@@ -1147,8 +1332,197 @@ function importBackup(input) {
   reader.readAsText(file);
 }
 
+// ── HOW TO USE ─────────────────────────────────────
+function openHowToUse() { document.getElementById('htuOverlay').classList.add('active'); }
+function closeHowToUse() { document.getElementById('htuOverlay').classList.remove('active'); }
+
+// ── HISTORY SYSTEM ────────────────────────────────
+const HISTORY_KEY = 'invoiceforge_history';
+
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveHistory(arr) { localStorage.setItem(HISTORY_KEY, JSON.stringify(arr)); }
+
+function recordHistory(via) {
+  const sub = items.reduce((a,i)=>a+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0);
+  const discAmt = calcDiscount(sub);
+  const taxable = Math.max(0, sub - discAmt);
+  const gstOn = gstIsOn(), gstRate = gstOn ? (parseFloat(getVal('gstRate'))||0) : 0;
+  const gstAmt = taxable * (gstRate / 100);
+  const total = taxable + gstAmt;
+  const discType = getVal('discountType') || 'percentage';
+  const discVal = parseFloat(getVal('discountValue')) || 0;
+
+  const record = {
+    id: Date.now(),
+    invoiceNo: getVal('invoiceNo') || '—',
+    invoiceDate: getVal('invoiceDate') || '',
+    clientName: getVal('clientName') || '—',
+    clientPhone: getVal('clientPhone') || '',
+    clientEmail: getVal('clientEmail') || '',
+    bizName: getVal('bizName') || '—',
+    currency: sym(),
+    subtotal: sub,
+    discountType: discType,
+    discountValue: discVal,
+    discountAmount: discAmt,
+    taxableAmount: taxable,
+    gstRate: gstRate,
+    gstAmount: gstAmt,
+    grandTotal: total,
+    via: via, // 'PDF' | 'Print' | 'WhatsApp'
+    timestamp: new Date().toISOString()
+  };
+
+  const history = getHistory();
+  history.unshift(record); // newest first
+  saveHistory(history);
+}
+
+function openHistory() {
+  renderHistory();
+  document.getElementById('historyOverlay').classList.add('active');
+  checkTodayReminder(true); // suppress reminder when manually opening
+}
+function closeHistory() { document.getElementById('historyOverlay').classList.remove('active'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('historyOverlay')) closeHistory(); }
+
+function renderHistory() {
+  const history = getHistory();
+  const q = (document.getElementById('historySearch')?.value || '').toLowerCase();
+  const filtered = q ? history.filter(r =>
+    r.invoiceNo.toLowerCase().includes(q) ||
+    r.clientName.toLowerCase().includes(q) ||
+    r.bizName.toLowerCase().includes(q)
+  ) : history;
+
+  document.getElementById('historyCount').textContent = filtered.length + ' record' + (filtered.length !== 1 ? 's' : '');
+
+  if (filtered.length === 0) {
+    document.getElementById('historyContent').innerHTML = `
+      <div class="history-empty">
+        <div style="font-size:36px">📭</div>
+        <p>${q ? 'No records match your search.' : 'No invoices recorded yet. Generate and download an invoice to start.'}</p>
+      </div>`;
+    return;
+  }
+
+  const rows = filtered.map(r => {
+    const badgeClass = r.via === 'PDF' ? 'badge-pdf' : r.via === 'Print' ? 'badge-print' : 'badge-whatsapp';
+    const ts = new Date(r.timestamp);
+    const dateStr = ts.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+    const timeStr = ts.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+    const discDisplay = r.discountAmount > 0
+      ? (r.discountType === 'flat' ? fmtINR(r.discountAmount, r.currency) : fmtINR(r.discountAmount, r.currency) + ` (${r.discountValue}%)`)
+      : '—';
+    return `<tr>
+      <td style="font-weight:600;color:var(--ink)">${r.invoiceNo}</td>
+      <td>${r.invoiceDate ? new Date(r.invoiceDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+      <td>${r.clientName}<br><span style="font-size:10px;color:var(--ink-4)">${r.clientPhone||r.clientEmail||''}</span></td>
+      <td style="text-align:right">${fmtINR(r.subtotal, r.currency)}</td>
+      <td style="text-align:right;color:var(--green)">${discDisplay}</td>
+      <td style="text-align:right">${fmtINR(r.taxableAmount, r.currency)}</td>
+      <td style="text-align:right">${r.gstRate > 0 ? fmtINR(r.gstAmount, r.currency) + ` (${r.gstRate}%)` : '—'}</td>
+      <td style="text-align:right;font-weight:600;color:var(--ink)">${fmtINR(r.grandTotal, r.currency)}</td>
+      <td><span class="history-badge ${badgeClass}">${r.via}</span></td>
+      <td style="font-size:11px;color:var(--ink-4)">${dateStr}<br>${timeStr}</td>
+      <td><button class="history-del-btn" onclick="deleteHistoryRecord(${r.id})" title="Delete">✕</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('historyContent').innerHTML = `
+    <table class="history-table">
+      <thead><tr>
+        <th>Invoice No</th><th>Date</th><th>Client</th>
+        <th style="text-align:right">Subtotal</th>
+        <th style="text-align:right">Discount</th>
+        <th style="text-align:right">Taxable</th>
+        <th style="text-align:right">GST</th>
+        <th style="text-align:right">Grand Total</th>
+        <th>Via</th><th>Recorded At</th><th></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function deleteHistoryRecord(id) {
+  const history = getHistory().filter(r => r.id !== id);
+  saveHistory(history);
+  renderHistory();
+}
+
+function clearAllHistory() {
+  if (!confirm('Delete all invoice history? This cannot be undone.')) return;
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+  showToast('History cleared', 'info');
+}
+
+// ── EXPORT HISTORY TO EXCEL ────────────────────────
+function exportHistoryExcel() {
+  const history = getHistory();
+  if (history.length === 0) { showToast('No history to export', 'error'); return; }
+
+  // Build CSV with all columns (Excel opens CSV natively)
+  const headers = [
+    'Invoice No','Invoice Date','Client Name','Client Phone','Client Email',
+    'Business Name','Currency','Subtotal','Discount Type','Discount Value',
+    'Discount Amount','Taxable Amount','GST Rate (%)','GST Amount',
+    'Grand Total','Shared Via','Recorded At'
+  ];
+
+  const escape = v => {
+    const s = String(v === null || v === undefined ? '' : v);
+    return s.includes(',') || s.includes('"') || s.includes('\n') ? '"' + s.replace(/"/g,'""') + '"' : s;
+  };
+
+  const rows = history.map(r => [
+    r.invoiceNo, r.invoiceDate,
+    r.clientName, r.clientPhone, r.clientEmail, r.bizName,
+    r.currency,
+    r.subtotal.toFixed(2),
+    r.discountType === 'flat' ? 'Flat Amount' : 'Percentage',
+    r.discountValue,
+    r.discountAmount.toFixed(2),
+    r.taxableAmount.toFixed(2),
+    r.gstRate,
+    r.gstAmount.toFixed(2),
+    r.grandTotal.toFixed(2),
+    r.via,
+    new Date(r.timestamp).toLocaleString('en-IN')
+  ].map(escape).join(','));
+
+  const csv = '\uFEFF' + headers.map(escape).join(',') + '\n' + rows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'InvoiceForge-History-' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✓ History exported to Excel', 'success');
+}
+
+// ── TODAY REMINDER ─────────────────────────────────
+function checkTodayReminder(suppress = false) {
+  if (suppress) return;
+  const history = getHistory();
+  const today = new Date().toDateString();
+  const todayCount = history.filter(r => new Date(r.timestamp).toDateString() === today).length;
+  if (todayCount > 0) {
+    const lastReminder = localStorage.getItem('invoiceforge_reminder_date');
+    if (lastReminder !== today) {
+      setTimeout(() => {
+        showToast(`📋 ${todayCount} invoice${todayCount>1?'s':''} today — export history before closing!`, 'info');
+        localStorage.setItem('invoiceforge_reminder_date', today);
+      }, 2000);
+    }
+  }
+}
+
+// ── CLEAR FORM ────────────────────────────────────
 function clearForm() {
-  if(!confirm('Clear all data and start a new invoice?')) return;
   ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo','notes','upiId','terms','hsnCode'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('gstRate').value='18';
   document.getElementById('discountType').value='percentage';
