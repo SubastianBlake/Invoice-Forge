@@ -214,6 +214,39 @@
   }
   .empty-state { text-align: center; padding: 2rem; color: var(--ink-4); font-size: 13px; }
 
+  /* ── TEMPLATE SWITCHER ── */
+  .tpl-switcher { display: flex; gap: 6px; margin-bottom: 10px; }
+  .tpl-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 4px; background: #fff; border: 2px solid var(--paper-3); border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; color: var(--ink-3); transition: all 0.15s; }
+  .tpl-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
+  .tpl-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); }
+  .tpl-btn svg { width: 28px; height: 20px; }
+
+  /* ── BUSINESS CARD MODAL ── */
+  .bizcard-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.6); z-index: 210; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
+  .bizcard-overlay.active { display: flex; }
+  .bizcard-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .bizcard-stage { padding: 2rem 1.5rem; display: flex; justify-content: center; background: var(--paper-2); }
+  .bizcard-sheet {
+    width: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    background: linear-gradient(160deg, #171512 0%, #322c24 100%);
+    color: #faf9f7;
+    padding: 2rem 1.5rem 1.75rem;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .bizcard-logo-wrap { width: 64px; height: 64px; border-radius: 50%; background: rgba(250,249,247,0.1); border: 1.5px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; overflow: hidden; }
+  .bizcard-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .bizcard-name { font-family: 'DM Serif Display', serif; font-size: 21px; letter-spacing: -0.01em; color: #fff; line-height: 1.25; }
+  .bizcard-tagline { font-size: 11px; color: rgba(250,249,247,0.55); margin-top: 5px; line-height: 1.5; }
+  .bizcard-divider { width: 40px; height: 2px; background: var(--accent); margin: 14px auto; border-radius: 2px; }
+  .bizcard-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: rgba(250,249,247,0.85); margin-bottom: 7px; }
+  .bizcard-row .ic { font-size: 12px; flex-shrink: 0; }
+  .bizcard-gstin { display: inline-block; margin-top: 8px; padding: 3px 10px; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.4); border-radius: 20px; font-size: 10px; letter-spacing: 0.04em; color: var(--accent); font-weight: 600; }
+  .bizcard-footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(250,249,247,0.12); font-size: 9px; color: rgba(250,249,247,0.3); letter-spacing: 0.05em; }
+
   /* ── HOW TO USE MODAL ── */
   .htu-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
   .htu-overlay.active { display: flex; }
@@ -269,6 +302,29 @@
 <div class="pdf-overlay" id="pdfOverlay"><div class="pdf-modal"><div class="pdf-spinner"></div><p>Generating your PDF…</p><small>This may take a few seconds</small></div></div>
 <div id="pdfRenderZone"></div>
 
+<!-- Business Card Modal -->
+<div class="bizcard-overlay" id="bizCardOverlay" onclick="if(event.target===this)closeBusinessCard()">
+  <div class="bizcard-modal">
+    <div class="history-header">
+      <h2>🪪 Business Card</h2>
+      <button class="history-close" onclick="closeBusinessCard()">✕ Close</button>
+    </div>
+    <div class="bizcard-stage">
+      <div class="bizcard-sheet" id="bizCardSheet"></div>
+    </div>
+    <div style="display:flex;gap:8px;padding:0 1.5rem 1.5rem">
+      <button class="btn btn-green" style="flex:1;justify-content:center" onclick="shareBusinessCard()">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.121 1.524 5.852L.059 23.54a.5.5 0 0 0 .613.612l5.687-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.538-5.363-1.473l-.384-.232-3.982 1.026 1.026-3.982-.233-.384A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Share
+      </button>
+      <button class="btn btn-gold" style="flex:1;justify-content:center" onclick="downloadBusinessCard()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PNG
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- How to Use Modal -->
 <div class="htu-overlay" id="htuOverlay" onclick="if(event.target===this)closeHowToUse()">
   <div class="htu-modal">
@@ -282,6 +338,7 @@
         <h3><span class="htu-step-label">1</span>Set Up Your Business (One Time Only)</h3>
         <p>Fill in your <strong>Business Name, Address, Email, Phone</strong> and <strong>GSTIN</strong> in the Business Details section. Upload your logo if you have one. Then click <strong>💾 Save My Business</strong> — your details will auto-fill every time you open the file. You never have to enter them again.</p>
         <div class="htu-tip"><strong>Tip:</strong> Also fill in your Bank Details and UPI ID in the Notes & Payment section before saving. These will appear on every invoice automatically.</div>
+        <div class="htu-tip"><strong>Bonus:</strong> Click <strong>🪪 Business Card</strong> to generate a shareable digital visiting card from your business details — download as an image or share it directly via WhatsApp.</div>
       </div>
 
       <hr class="htu-divider">
@@ -335,7 +392,6 @@
         <ul>
           <li><strong>PDF</strong> — downloads a high-quality PDF ready to email or print</li>
           <li><strong>WhatsApp</strong> — downloads the PDF and opens WhatsApp with a pre-filled message. Attach the PDF and send.</li>
-          <li><strong>Print</strong> — prints directly from the browser</li>
         </ul>
         <div class="htu-tip"><strong>Every time you download or share</strong>, the invoice is automatically saved to your History.</div>
       </div>
@@ -440,6 +496,7 @@
         <h3>Business Details</h3>
         <div style="margin-left:auto;display:flex;gap:6px">
           <button id="bizSaveBtn" onclick="saveBusinessProfile()" style="font-size:11px;font-weight:600;padding:4px 10px;background:var(--accent-light);color:var(--accent-dark);border:1px solid var(--accent);border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s" onmouseover="this.style.background='#ecdfc4'" onmouseout="this.style.background='var(--accent-light)'">💾 Save My Business</button>
+          <button id="bizCardBtn" onclick="openBusinessCard()" style="font-size:11px;font-weight:600;padding:4px 10px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s">🪪 Business Card</button>
           <button id="bizClearBtn" onclick="clearBusinessProfile()" style="display:none;font-size:11px;font-weight:500;padding:4px 10px;background:none;color:var(--ink-3);border:1px solid var(--paper-3);border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif">✕ Clear Saved</button>
         </div>
       </div>
@@ -491,9 +548,50 @@
           <div class="field"><label>Client Phone</label><input type="text" id="clientPhone" placeholder="+91 98765 43210" oninput="updatePreview()"></div>
           <div class="field"><label>GSTIN (Client)</label><input type="text" id="clientGstin" placeholder="07AABCU9603R1ZX" oninput="updatePreview()"></div>
         </div>
-        <div class="field-group cols-2">
+        <div class="field-group cols-2" style="margin-bottom:1rem">
           <div class="field"><label>PO / Reference No.</label><input type="text" id="refNo" placeholder="PO-2024-789" oninput="updatePreview()"></div>
         </div>
+
+        <!-- Ship To Toggle -->
+        <div style="border-top:1px solid var(--paper-3);padding-top:1rem;margin-top:0.25rem">
+          <button id="shipToToggle" onclick="toggleShipTo()" style="display:flex;align-items:center;gap:7px;background:none;border:1px dashed var(--paper-3);border-radius:7px;padding:8px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--accent-dark);width:100%;justify-content:center;transition:all 0.15s">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Ship To (if different from billing address)
+          </button>
+
+          <div id="shipToSection" style="display:none;margin-top:1rem">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:0.75rem">
+              <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)">🚚 Ship To</span>
+              <button onclick="clearShipTo()" style="font-size:11px;color:var(--ink-4);background:none;border:none;cursor:pointer;padding:0;margin-left:auto">✕ Remove</button>
+            </div>
+            <div class="field" style="margin-bottom:0.75rem">
+              <label>Recipient Name</label>
+              <input type="text" id="shipName" placeholder="Warehouse / Branch Name" oninput="updatePreview(); checkGstStateWarn()">
+            </div>
+            <div class="field" style="margin-bottom:0.75rem">
+              <label>Shipping Address</label>
+              <input type="text" id="shipAddress" placeholder="Plot 5, Industrial Area, Ludhiana — 141003" oninput="updatePreview()">
+            </div>
+            <div class="field-group cols-2">
+              <div class="field">
+                <label>Shipping State</label>
+                <select id="shipState" onchange="updatePreview(); checkGstStateWarn()">
+                  <option value="">— Select State —</option>
+                  <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Delhi</option><option>Jammu &amp; Kashmir</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>GSTIN (Ship To)</label>
+                <input type="text" id="shipGstin" placeholder="Optional" oninput="updatePreview()">
+              </div>
+            </div>
+            <!-- GST State Warning -->
+            <div id="gstStateWarn" style="display:none;margin-top:0.75rem;background:#fff8e6;border:1px solid #ffe0a0;border-radius:7px;padding:9px 12px;font-size:12px;color:#7a5c00">
+              ⚠️ <strong>Shipping state differs from Place of Supply.</strong> If goods/services are delivered to a different state, <strong>IGST</strong> should apply — verify your GST type in Tax & Settings.
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -616,12 +714,28 @@
 
   <div class="preview-panel hidden" id="previewPanel">
     <div class="preview-label">Live Preview</div>
-    <div class="invoice-sheet" id="invoiceSheet"></div>
-    <div style="margin-top:1rem;display:flex;gap:8px">
-      <button class="btn btn-outline" style="flex:1" onclick="printInvoice()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print
+    <!-- Template Switcher -->
+    <div class="tpl-switcher">
+      <button class="tpl-btn active" id="tpl-classic" onclick="setTemplate('classic')" title="Classic — consultants, MFDs, services">
+        <svg viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="5" fill="#0f0e0d" rx="1"/><rect x="2" y="8" width="16" height="2" fill="#c8a96e" rx="1"/><rect x="2" y="11" width="10" height="1.5" fill="#b8b4ac" rx="1"/><rect x="24" y="8" width="14" height="1.5" fill="#e8e4dc" rx="1"/><rect x="24" y="11" width="10" height="1.5" fill="#e8e4dc" rx="1"/><rect x="2" y="16" width="36" height="1" fill="#e8e4dc" rx="1"/><rect x="2" y="19" width="20" height="1" fill="#f2f0ec" rx="1"/><rect x="2" y="22" width="14" height="1" fill="#f2f0ec" rx="1"/><rect x="28" y="22" width="10" height="2.5" fill="#0f0e0d" rx="1"/></svg>
+        Classic
       </button>
-      <button class="btn btn-gold" style="flex:1" onclick="downloadPDF()">
+      <button class="tpl-btn" id="tpl-modern" onclick="setTemplate('modern')" title="Modern — freelancers, designers, tech">
+        <svg viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="36" height="24" rx="2" fill="#f8f8f8" stroke="#e0e0e0" stroke-width="0.5"/><rect x="5" y="5" width="12" height="3" fill="#222" rx="1"/><rect x="5" y="9" width="8" height="1.5" fill="#aaa" rx="1"/><rect x="25" y="5" width="10" height="1.5" fill="#ddd" rx="1"/><rect x="25" y="8" width="7" height="1.5" fill="#ddd" rx="1"/><rect x="5" y="14" width="30" height="0.5" fill="#333"/><rect x="5" y="17" width="18" height="1" fill="#eee" rx="1"/><rect x="5" y="20" width="12" height="1" fill="#eee" rx="1"/><rect x="27" y="20" width="8" height="2" fill="#222" rx="1"/></svg>
+        Modern
+      </button>
+      <button class="tpl-btn" id="tpl-traditional" onclick="setTemplate('traditional')" title="Traditional — traders, manufacturers, B2B">
+        <svg viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="38" height="26" rx="0" stroke="#333" stroke-width="1.5" fill="white"/><rect x="1" y="1" width="38" height="7" fill="#1a3a6b" rx="0"/><rect x="5" y="3" width="12" height="2" fill="white" rx="1"/><rect x="20" y="3" width="15" height="2" fill="#8ba4d4" rx="1"/><rect x="1" y="10" width="38" height="0.5" fill="#333"/><rect x="3" y="12" width="16" height="1" fill="#ddd" rx="1"/><rect x="3" y="15" width="22" height="1" fill="#ddd" rx="1"/><rect x="3" y="18" width="12" height="1" fill="#ddd" rx="1"/><rect x="25" y="18" width="12" height="3" fill="#1a3a6b" rx="0"/><rect x="1" y="24" width="38" height="0.5" fill="#333"/></svg>
+        Traditional
+      </button>
+      <button class="tpl-btn" id="tpl-compact" onclick="setTemplate('compact')" title="Compact — transport, logistics, high items">
+        <svg viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="36" height="3" fill="#2d6a4f" rx="1"/><rect x="2" y="7" width="14" height="1.5" fill="#ccc" rx="1"/><rect x="18" y="7" width="8" height="1.5" fill="#ccc" rx="1"/><rect x="28" y="7" width="10" height="1.5" fill="#ccc" rx="1"/><rect x="2" y="10" width="36" height="0.5" fill="#e0e0e0"/><rect x="2" y="12" width="14" height="1" fill="#f0f0f0" rx="1"/><rect x="18" y="12" width="8" height="1" fill="#f0f0f0" rx="1"/><rect x="28" y="12" width="10" height="1" fill="#f0f0f0" rx="1"/><rect x="2" y="14" width="14" height="1" fill="#f0f0f0" rx="1"/><rect x="18" y="14" width="8" height="1" fill="#f0f0f0" rx="1"/><rect x="28" y="14" width="10" height="1" fill="#f0f0f0" rx="1"/><rect x="2" y="16" width="14" height="1" fill="#f0f0f0" rx="1"/><rect x="2" y="18" width="14" height="1" fill="#f0f0f0" rx="1"/><rect x="2" y="22" width="36" height="0.5" fill="#2d6a4f"/><rect x="24" y="24" width="14" height="2" fill="#2d6a4f" rx="1"/></svg>
+        Compact
+      </button>
+    </div>
+    <div class="invoice-sheet" id="invoiceSheet"></div>
+    <div style="margin-top:1rem">
+      <button class="btn btn-gold" style="width:100%" onclick="downloadPDF()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download PDF
       </button>
     </div>
@@ -827,9 +941,10 @@ window.addEventListener('DOMContentLoaded', () => {
     lbl.textContent = this.value === 'flat' ? 'Discount Value (' + sym() + ')' : 'Discount Value (%)';
   });
 
-  loadBusinessProfile();
+  // Restore active template button
+  document.querySelectorAll('.tpl-btn').forEach(b => b.classList.toggle('active', b.id === 'tpl-'+currentTemplate));
 
-  // Show How to Use on first ever visit
+  loadBusinessProfile();
   if (!localStorage.getItem('invoiceforge_visited')) {
     localStorage.setItem('invoiceforge_visited', '1');
     setTimeout(() => openHowToUse(), 600);
@@ -847,6 +962,8 @@ function collectFormData() {
   return {
     bizName:getVal('bizName'), bizAddress:getVal('bizAddress'), bizEmail:getVal('bizEmail'), bizPhone:getVal('bizPhone'), bizGstin:getVal('bizGstin'),
     clientName:getVal('clientName'), clientEmail:getVal('clientEmail'), clientPhone:getVal('clientPhone'), clientAddress:getVal('clientAddress'), clientGstin:getVal('clientGstin'), refNo:getVal('refNo'),
+    shipName:getVal('shipName'), shipAddress:getVal('shipAddress'), shipState:getVal('shipState'), shipGstin:getVal('shipGstin'),
+    shipToVisible: document.getElementById('shipToSection')?.style.display === 'block',
     invoiceNo:getVal('invoiceNo'), invoiceDate:getVal('invoiceDate'), notes:getVal('notes'), upiId:getVal('upiId'), terms:getVal('terms'),
     hsnCode:getVal('hsnCode'), currency:getVal('currency'),
     discountType:getVal('discountType'), discountValue:getVal('discountValue'),
@@ -858,6 +975,7 @@ function collectFormData() {
 function saveDraft() { localStorage.setItem('invoiceforge_draft', JSON.stringify(collectFormData())); showToast('✓ Draft saved','success'); }
 function loadDraftData(data) {
   ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo',
+   'shipName','shipAddress','shipState','shipGstin',
    'invoiceNo','invoiceDate','notes','upiId','terms','hsnCode','currency','gstRate','gstType','placeOfSupply'].forEach(id => {
     const el=document.getElementById(id); if(el && data[id]!==undefined) el.value=data[id];
   });
@@ -877,6 +995,12 @@ function loadDraftData(data) {
   const loadedRate = parseFloat(getVal('gstRate'));
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', parseInt(b.textContent) === loadedRate));
   toggleGST();
+  // Restore Ship To visibility
+  if (data.shipToVisible && (data.shipName || data.shipAddress)) {
+    document.getElementById('shipToSection').style.display = 'block';
+    document.getElementById('shipToToggle').style.display = 'none';
+    checkGstStateWarn();
+  }
   if(data.logoDataURL) {
     logoDataURL=data.logoDataURL;
     const img=document.getElementById('logoPreview'); img.src=logoDataURL; img.style.display='block';
@@ -910,8 +1034,7 @@ function shareWhatsApp() {
   const gstOn=gstIsOn(), gstRate=gstOn?(parseFloat(getVal('gstRate'))||0):0;
   const total=taxable+taxable*(gstRate/100);
   const msg=`Dear ${clientName},\n\nPlease find attached the invoice from *${bizName}*:\n\n📄 Invoice No: *${invNo}*\n📅 Date: ${date}\n💰 Amount Due: *${fmtINR(total,s)}*\n\nKindly arrange payment at your earliest convenience.\n\nThank you for your business.`;
-  recordHistory('WhatsApp');
-  downloadPDF().then(() => {
+  downloadPDF('WhatsApp').then(() => {
     setTimeout(() => window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank'), 800);
   });
 }
@@ -1053,6 +1176,375 @@ function recalcTotals() {
   updateGSTBreakdown(taxable, gstRate);
 }
 
+// ── TEMPLATE SYSTEM ───────────────────────────────
+let currentTemplate = localStorage.getItem('invoiceforge_template') || 'classic';
+
+function setTemplate(tpl) {
+  currentTemplate = tpl;
+  localStorage.setItem('invoiceforge_template', tpl);
+  document.querySelectorAll('.tpl-btn').forEach(b => b.classList.toggle('active', b.id === 'tpl-'+tpl));
+  updatePreview();
+}
+
+function getTemplateData() {
+  const s=sym();
+  const sub=items.reduce((a,i)=>a+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0);
+  const discAmt=calcDiscount(sub);
+  const taxable=Math.max(0, sub-discAmt);
+  const gstOn=gstIsOn(), gstRate=gstOn?(parseFloat(getVal('gstRate'))||0):0;
+  const gstAmt=taxable*(gstRate/100);
+  const total=taxable+gstAmt;
+  const gstType=gstOn?getVal('gstType'):'';
+  const bizName=escHtml(getVal('bizName'))||'Your Business';
+  const logoHTML=logoDataURL?`<img src="${logoDataURL}" alt="Logo">`:`<div class="inv-logo-placeholder">🏢</div>`;
+  const refHTML=getVal('refNo')?`<div style="font-size:10px;color:var(--ink-3);margin-top:3px">Ref: ${escHtml(getVal('refNo'))}</div>`:'';
+  const bizGstinHTML=getVal('bizGstin')?`<div class="inv-party-detail" style="color:var(--accent-dark);font-weight:500">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:'';
+  const clientGstinHTML=getVal('clientGstin')?`<div class="inv-party-detail" style="color:var(--accent-dark);font-weight:500">GSTIN: ${escHtml(getVal('clientGstin'))}</div>`:'';
+  const wordsHTML=`<div class="inv-amount-words"><strong>Amount in Words:</strong> ${amountInWords(total,s)}</div>`;
+  const notesHTML=getVal('notes')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px">Payment Details</div><div style="font-size:10px;color:var(--ink-2);white-space:pre-line;background:var(--paper);border:1px solid var(--paper-3);border-radius:6px;padding:8px 10px">${escHtml(getVal('notes'))}</div></div>`:'';
+  const upiHTML=getVal('upiId')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px">UPI</div><div style="font-size:10px;color:var(--ink-2);font-weight:500">📲 ${escHtml(getVal('upiId'))}</div></div>`:'';
+  const termsHTML=getVal('terms')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px">Terms &amp; Conditions</div><div style="font-size:10px;color:var(--ink-3)">${escHtml(getVal('terms'))}</div></div>`:'';
+  const signHTML=`<div class="inv-sign-block"><div class="inv-sign-inner"><div class="inv-sign-line"></div><div class="inv-sign-label">For ${bizName}</div><div class="inv-sign-name">Authorised Signatory</div></div></div>`;
+  const discRowHTML=discAmt>0?`<div class="inv-tot-row disc"><span>${discountLabel()}</span><span>−${fmtINR(discAmt,s)}</span></div><div class="inv-tot-row taxable"><span>Taxable Amount</span><span>${fmtINR(taxable,s)}</span></div>`:'';
+  let gstTotRow='';
+  if(gstOn){ if(gstType==='cgst_sgst'){const h=gstAmt/2,hr=gstRate/2;gstTotRow=`<div class="inv-tot-row"><span>CGST (${hr}%)</span><span>${fmtINR(h,s)}</span></div><div class="inv-tot-row"><span>SGST (${hr}%)</span><span>${fmtINR(h,s)}</span></div>`;}else gstTotRow=`<div class="inv-tot-row"><span>IGST (${gstRate}%)</span><span>${fmtINR(gstAmt,s)}</span></div>`;}
+  let gstInvHTML='';
+  if(gstOn&&gstAmt>0){
+    const hsn=getVal('hsnCode'),pos=getVal('placeOfSupply'),typeLabel=gstType==='cgst_sgst'?'CGST + SGST':'IGST';
+    const typeBadge=`<span class="inv-gst-badge">${typeLabel}</span>`;
+    let rows='';
+    if(gstType==='cgst_sgst'){const half=gstAmt/2,hr=gstRate/2;rows=`<thead><tr><td>Tax Component</td><td>Rate</td><td>Taxable Value</td><td>Tax Amount</td></tr></thead><tbody><tr><td>CGST</td><td>${hr}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(half,s)}</td></tr><tr><td>SGST</td><td>${hr}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(half,s)}</td></tr><tr><td><strong>Total GST</strong></td><td>${gstRate}%</td><td>—</td><td><strong>${fmtINR(gstAmt,s)}</strong></td></tr></tbody>`;}
+    else rows=`<thead><tr><td>Tax Component</td><td>Rate</td><td>Taxable Value</td><td>Tax Amount</td></tr></thead><tbody><tr><td>IGST</td><td>${gstRate}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(gstAmt,s)}</td></tr><tr><td><strong>Total GST</strong></td><td>${gstRate}%</td><td>—</td><td><strong>${fmtINR(gstAmt,s)}</strong></td></tr></tbody>`;
+    gstInvHTML=`<div class="inv-gst-section"><div class="inv-gst-section-title">Tax Summary &nbsp;${typeBadge}${hsn?`<span style="color:var(--ink-4);margin:0 4px">|</span> HSN/SAC: <strong style="color:var(--ink-2)">${escHtml(hsn)}</strong>`:''}${pos?`<span style="color:var(--ink-4);margin:0 4px">|</span> Place of Supply: <strong style="color:var(--ink-2)">${escHtml(pos)}</strong>`:''}</div><table class="inv-gst-table">${rows}</table></div>`;
+  }
+  const itemRowsHTML=items.length===0
+    ?`<tr><td colspan="4" style="text-align:center;padding:1rem;color:var(--ink-4);font-style:italic">No items added</td></tr>`
+    :items.map((item,idx)=>{
+      const amt=(parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+      return `<tr><td>${idx+1}. ${escHtml(item.desc)||'—'}<br><span style="font-size:9px;color:var(--ink-4);letter-spacing:0.04em;text-transform:uppercase">${item.type||'Service'}${item.hsn?` · HSN/SAC: ${escHtml(item.hsn)}`:''}</span></td><td style="text-align:right">${item.qty}</td><td style="text-align:right">${fmtINR(parseFloat(item.price||0),s)}</td><td style="text-align:right;font-weight:600">${fmtINR(amt,s)}</td></tr>`;
+    }).join('');
+  // Ship To
+  const shipName = getVal('shipName');
+  const shipAddr = getVal('shipAddress');
+  const shipState = getVal('shipState');
+  const shipGstin = getVal('shipGstin');
+  const hasShipTo = !!(shipName || shipAddr);
+  const shipHTML = hasShipTo ? `
+    <div>
+      <div class="inv-party-label">Ship To</div>
+      <div class="inv-party-name">${escHtml(shipName)||escHtml(getVal('clientName'))||'—'}</div>
+      ${shipAddr?`<div class="inv-party-detail">${escHtml(shipAddr)}</div>`:''}
+      ${shipState?`<div class="inv-party-detail">${escHtml(shipState)}</div>`:''}
+      ${shipGstin?`<div class="inv-party-detail" style="color:var(--accent-dark);font-weight:500">GSTIN: ${escHtml(shipGstin)}</div>`:''}
+    </div>` : '';
+
+  return {s,sub,discAmt,taxable,gstOn,gstRate,gstAmt,total,gstType,bizName,logoHTML,refHTML,bizGstinHTML,clientGstinHTML,wordsHTML,notesHTML,upiHTML,termsHTML,signHTML,discRowHTML,gstTotRow,gstInvHTML,itemRowsHTML,hasShipTo,shipHTML,shipName,shipAddr,shipState,shipGstin};
+}
+
+// ── TEMPLATE 1: CLASSIC ───────────────────────────
+function renderClassic(d) {
+  return `
+    <div class="inv-top-bar"></div>
+    <div class="inv-body">
+      <div class="inv-header">
+        <div class="inv-logo-area">${d.logoHTML}</div>
+        <div class="inv-meta">
+          <div class="inv-title-text">Invoice</div>
+          <div class="inv-number">${escHtml(getVal('invoiceNo'))||'INV/2025-26/001'}</div>
+          ${d.refHTML}
+          <div class="inv-date" style="margin-top:5px"><strong>Date:</strong> ${fmtDate(getVal('invoiceDate'))||'—'}</div>
+        </div>
+      </div>
+      <div class="inv-parties" style="${d.hasShipTo ? 'grid-template-columns:1fr 1fr 1fr' : ''}">
+        <div>
+          <div class="inv-party-label">From</div>
+          <div class="inv-party-name">${d.bizName}</div>
+          ${getVal('bizAddress')?`<div class="inv-party-detail">${escHtml(getVal('bizAddress'))}</div>`:''}
+          ${getVal('bizEmail')?`<div class="inv-party-detail">${escHtml(getVal('bizEmail'))}</div>`:''}
+          ${getVal('bizPhone')?`<div class="inv-party-detail">${escHtml(getVal('bizPhone'))}</div>`:''}
+          ${d.bizGstinHTML}
+        </div>
+        <div>
+          <div class="inv-party-label">Bill To</div>
+          <div class="inv-party-name">${escHtml(getVal('clientName'))||'Client Name'}</div>
+          ${getVal('clientEmail')?`<div class="inv-party-detail">${escHtml(getVal('clientEmail'))}</div>`:''}
+          ${getVal('clientPhone')?`<div class="inv-party-detail">${escHtml(getVal('clientPhone'))}</div>`:''}
+          ${getVal('clientAddress')?`<div class="inv-party-detail">${escHtml(getVal('clientAddress'))}</div>`:''}
+          ${d.clientGstinHTML}
+        </div>
+        ${d.shipHTML}
+      </div>
+      <table class="inv-table">
+        <thead><tr><th>Description</th><th style="text-align:right">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Amount</th></tr></thead>
+        <tbody>${d.itemRowsHTML}</tbody>
+      </table>
+      ${d.gstInvHTML}
+      <div class="inv-totals-section"><div class="inv-totals-inner">
+        <div class="inv-tot-row"><span>Subtotal</span><span>${fmtINR(d.sub,d.s)}</span></div>
+        ${d.discRowHTML}${d.gstTotRow}
+        <hr class="inv-tot-divider">
+        <div class="inv-tot-grand"><span class="gl">Total Due</span><span class="gv">${fmtINR(d.total,d.s)}</span></div>
+      </div></div>
+      ${d.wordsHTML}${d.notesHTML}${d.upiHTML}${d.termsHTML}${d.signHTML}
+      <div class="inv-footer-band">
+        <p>${d.bizName}${getVal('bizEmail')?' · '+escHtml(getVal('bizEmail')):''}</p>
+        <span class="thank">This is a computer-generated invoice.</span>
+      </div>
+    </div>`;
+}
+
+// ── TEMPLATE 2: MODERN MINIMAL ────────────────────
+function renderModern(d) {
+  return `<div style="font-family:'DM Sans',sans-serif;background:#fff;padding:2rem">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:3px solid #111">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#999;margin-bottom:6px">Invoice</div>
+        <div style="font-size:22px;font-weight:700;color:#111;letter-spacing:-0.02em">${d.bizName}</div>
+        ${getVal('bizAddress')?`<div style="font-size:11px;color:#888;margin-top:3px">${escHtml(getVal('bizAddress'))}</div>`:''}
+        ${getVal('bizEmail')?`<div style="font-size:11px;color:#888">${escHtml(getVal('bizEmail'))}</div>`:''}
+        ${getVal('bizGstin')?`<div style="font-size:11px;color:#555;font-weight:600;margin-top:2px">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:''}
+      </div>
+      <div style="text-align:right">
+        ${d.logoHTML ? `<div style="margin-bottom:8px">${d.logoHTML}</div>` : ''}
+        <div style="font-size:18px;font-weight:800;color:#111">${escHtml(getVal('invoiceNo'))||'INV/2025-26/001'}</div>
+        <div style="font-size:11px;color:#888;margin-top:4px">${fmtDate(getVal('invoiceDate'))||'—'}</div>
+        ${d.refHTML}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:${d.hasShipTo?'1fr 1fr 1fr':'1fr 1fr'};gap:2rem;margin-bottom:1.5rem">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#bbb;margin-bottom:6px">From</div>
+        <div style="font-size:13px;font-weight:600;color:#111">${d.bizName}</div>
+        ${getVal('bizPhone')?`<div style="font-size:11px;color:#888">${escHtml(getVal('bizPhone'))}</div>`:''}
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#bbb;margin-bottom:6px">Bill To</div>
+        <div style="font-size:13px;font-weight:600;color:#111">${escHtml(getVal('clientName'))||'—'}</div>
+        ${getVal('clientEmail')?`<div style="font-size:11px;color:#888">${escHtml(getVal('clientEmail'))}</div>`:''}
+        ${getVal('clientPhone')?`<div style="font-size:11px;color:#888">${escHtml(getVal('clientPhone'))}</div>`:''}
+        ${getVal('clientAddress')?`<div style="font-size:11px;color:#888">${escHtml(getVal('clientAddress'))}</div>`:''}
+        ${getVal('clientGstin')?`<div style="font-size:11px;color:#555;font-weight:600">GSTIN: ${escHtml(getVal('clientGstin'))}</div>`:''}
+      </div>
+      ${d.hasShipTo?`<div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#bbb;margin-bottom:6px">🚚 Ship To</div>
+        <div style="font-size:13px;font-weight:600;color:#111">${escHtml(d.shipName)||escHtml(getVal('clientName'))||'—'}</div>
+        ${d.shipAddr?`<div style="font-size:11px;color:#888">${escHtml(d.shipAddr)}</div>`:''}
+        ${d.shipState?`<div style="font-size:11px;color:#888">${escHtml(d.shipState)}</div>`:''}
+        ${d.shipGstin?`<div style="font-size:11px;color:#555;font-weight:600">GSTIN: ${escHtml(d.shipGstin)}</div>`:''}
+      </div>`:''}
+    </div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:1rem">
+      <thead><tr style="border-bottom:1px solid #111">
+        <th style="padding:6px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;text-align:left">Description</th>
+        <th style="padding:6px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;text-align:right">Qty</th>
+        <th style="padding:6px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;text-align:right">Rate</th>
+        <th style="padding:6px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#999;text-align:right">Amount</th>
+      </tr></thead>
+      <tbody>${d.itemRowsHTML}</tbody>
+    </table>
+    ${d.gstInvHTML}
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+      <div style="width:210px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;color:#888"><span>Subtotal</span><span style="color:#333">${fmtINR(d.sub,d.s)}</span></div>
+        ${d.discRowHTML}${d.gstTotRow}
+        <div style="border-top:2px solid #111;margin:6px 0"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#111">Total Due</span>
+          <span style="font-size:20px;font-weight:800;color:#111">${fmtINR(d.total,d.s)}</span>
+        </div>
+      </div>
+    </div>
+    ${d.wordsHTML}${d.notesHTML}${d.upiHTML}${d.termsHTML}${d.signHTML}
+    <div style="border-top:1px solid #eee;padding-top:0.6rem;margin-top:0.5rem;display:flex;justify-content:space-between;font-size:10px;color:#bbb">
+      <span>${d.bizName}</span><span style="font-style:italic">This is a computer-generated invoice.</span>
+    </div>
+  </div>`;
+}
+
+// ── TEMPLATE 3: TRADITIONAL ───────────────────────
+function renderTraditional(d) {
+  const border = '1px solid #333';
+  return `<div style="font-family:'DM Sans',sans-serif;background:#fff;padding:0;border:2px solid #1a3a6b">
+    <div style="background:#1a3a6b;color:#fff;padding:1rem 1.5rem;text-align:center">
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem">
+        ${logoDataURL?`<img src="${logoDataURL}" alt="Logo" style="max-height:60px;max-width:120px;object-fit:contain">`:''}
+        <div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:0.02em">${d.bizName}</div>
+          ${getVal('bizAddress')?`<div style="font-size:11px;opacity:0.8;margin-top:2px">${escHtml(getVal('bizAddress'))}</div>`:''}
+          ${getVal('bizGstin')?`<div style="font-size:11px;opacity:0.8">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:''}
+        </div>
+      </div>
+    </div>
+    <div style="background:#e8f0fb;text-align:center;padding:6px;font-size:14px;font-weight:700;letter-spacing:0.1em;color:#1a3a6b;border-bottom:1px solid #1a3a6b;border-top:1px solid #1a3a6b">TAX INVOICE</div>
+    <div style="padding:0.75rem 1rem;border-bottom:${border}">
+      <table style="width:100%;font-size:11px">
+        <tr>
+          <td style="width:50%;vertical-align:top;padding-right:1rem">
+            <strong>Invoice No.:</strong> ${escHtml(getVal('invoiceNo'))||'—'}<br>
+            <strong>Date:</strong> ${fmtDate(getVal('invoiceDate'))||'—'}
+            ${getVal('refNo')?`<br><strong>Ref.:</strong> ${escHtml(getVal('refNo'))}`:''}
+          </td>
+          <td style="width:50%;vertical-align:top">
+            ${getVal('bizPhone')?`<strong>Phone:</strong> ${escHtml(getVal('bizPhone'))}<br>`:''}
+            ${getVal('bizEmail')?`<strong>Email:</strong> ${escHtml(getVal('bizEmail'))}`:''}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="display:grid;grid-template-columns:${d.hasShipTo?'1fr 1fr 1fr':'1fr 1fr'};border-bottom:${border}">
+      <div style="padding:0.75rem 1rem;border-right:${border}">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1a3a6b;margin-bottom:5px;border-bottom:1px solid #ddd;padding-bottom:3px">Billed By</div>
+        <div style="font-size:12px;font-weight:700">${d.bizName}</div>
+        ${getVal('bizAddress')?`<div style="font-size:11px;color:#555">${escHtml(getVal('bizAddress'))}</div>`:''}
+        ${getVal('bizGstin')?`<div style="font-size:11px;color:#1a3a6b;font-weight:600">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:''}
+      </div>
+      <div style="padding:0.75rem 1rem;${d.hasShipTo?'border-right:'+border:''}">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1a3a6b;margin-bottom:5px;border-bottom:1px solid #ddd;padding-bottom:3px">Billed To</div>
+        <div style="font-size:12px;font-weight:700">${escHtml(getVal('clientName'))||'—'}</div>
+        ${getVal('clientAddress')?`<div style="font-size:11px;color:#555">${escHtml(getVal('clientAddress'))}</div>`:''}
+        ${getVal('clientPhone')?`<div style="font-size:11px;color:#555">${escHtml(getVal('clientPhone'))}</div>`:''}
+        ${getVal('clientGstin')?`<div style="font-size:11px;color:#1a3a6b;font-weight:600">GSTIN: ${escHtml(getVal('clientGstin'))}</div>`:''}
+      </div>
+      ${d.hasShipTo?`<div style="padding:0.75rem 1rem">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1a3a6b;margin-bottom:5px;border-bottom:1px solid #ddd;padding-bottom:3px">🚚 Shipped To</div>
+        <div style="font-size:12px;font-weight:700">${escHtml(d.shipName)||escHtml(getVal('clientName'))||'—'}</div>
+        ${d.shipAddr?`<div style="font-size:11px;color:#555">${escHtml(d.shipAddr)}</div>`:''}
+        ${d.shipState?`<div style="font-size:11px;color:#555">${escHtml(d.shipState)}</div>`:''}
+        ${d.shipGstin?`<div style="font-size:11px;color:#1a3a6b;font-weight:600">GSTIN: ${escHtml(d.shipGstin)}</div>`:''}
+      </div>`:''}
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead>
+        <tr style="background:#e8f0fb">
+          <th style="padding:7px 8px;border:${border};text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:0.07em;color:#1a3a6b">#</th>
+          <th style="padding:7px 8px;border:${border};text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:0.07em;color:#1a3a6b">Description</th>
+          <th style="padding:7px 8px;border:${border};text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:0.07em;color:#1a3a6b">Qty</th>
+          <th style="padding:7px 8px;border:${border};text-align:right;font-size:9px;text-transform:uppercase;letter-spacing:0.07em;color:#1a3a6b">Rate</th>
+          <th style="padding:7px 8px;border:${border};text-align:right;font-size:9px;text-transform:uppercase;letter-spacing:0.07em;color:#1a3a6b">Amount</th>
+        </tr>
+      </thead>
+      <tbody>${items.length===0?`<tr><td colspan="5" style="padding:1rem;text-align:center;color:#aaa;border:${border}">No items added</td></tr>`:
+        items.map((item,idx)=>{
+          const amt=(parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+          return `<tr>
+            <td style="padding:6px 8px;border:${border};color:#555">${idx+1}</td>
+            <td style="padding:6px 8px;border:${border}">${escHtml(item.desc)||'—'}${item.hsn?`<br><span style="font-size:9px;color:#aaa">HSN/SAC: ${escHtml(item.hsn)}</span>`:''}</td>
+            <td style="padding:6px 8px;border:${border};text-align:center">${item.qty}</td>
+            <td style="padding:6px 8px;border:${border};text-align:right">${fmtINR(parseFloat(item.price||0),d.s)}</td>
+            <td style="padding:6px 8px;border:${border};text-align:right;font-weight:600">${fmtINR(amt,d.s)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    ${d.gstInvHTML}
+    <div style="display:flex;justify-content:flex-end;padding:0.75rem 1rem;border-top:${border}">
+      <table style="width:220px;font-size:11px;border-collapse:collapse">
+        <tr><td style="padding:3px 8px;color:#555">Subtotal</td><td style="padding:3px 8px;text-align:right">${fmtINR(d.sub,d.s)}</td></tr>
+        ${d.discAmt>0?`<tr><td style="padding:3px 8px;color:#1a7f5a">${discountLabel()}</td><td style="padding:3px 8px;text-align:right;color:#1a7f5a">−${fmtINR(d.discAmt,d.s)}</td></tr><tr><td style="padding:3px 8px;color:#555">Taxable</td><td style="padding:3px 8px;text-align:right">${fmtINR(d.taxable,d.s)}</td></tr>`:''}
+        ${d.gstOn?`<tr><td style="padding:3px 8px;color:#555">GST (${d.gstRate}%)</td><td style="padding:3px 8px;text-align:right">${fmtINR(d.gstAmt,d.s)}</td></tr>`:''}
+        <tr style="background:#1a3a6b;color:#fff"><td style="padding:6px 8px;font-weight:700;font-size:12px">TOTAL DUE</td><td style="padding:6px 8px;text-align:right;font-weight:700;font-size:13px">${fmtINR(d.total,d.s)}</td></tr>
+      </table>
+    </div>
+    ${d.wordsHTML}
+    <div style="padding:0.75rem 1rem;border-top:${border};font-size:11px">
+      ${d.notesHTML}${d.upiHTML}${d.termsHTML}
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0.75rem 1rem;border-top:${border}">
+      <div style="font-size:10px;color:#888;font-style:italic">This is a computer-generated invoice.</div>
+      <div style="text-align:center;min-width:160px">
+        <div style="border-top:1px solid #555;padding-top:4px;margin-top:28px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#555">For ${d.bizName}</div>
+        <div style="font-size:10px;color:#777;margin-top:2px">Authorised Signatory</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── TEMPLATE 4: COMPACT ───────────────────────────
+function renderCompact(d) {
+  const G = '#2d6a4f';
+  return `<div style="font-family:'DM Sans',sans-serif;background:#fff;padding:1.25rem;font-size:11px">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;margin-bottom:8px;border-bottom:2px solid ${G}">
+      <div style="display:flex;align-items:center;gap:10px">
+        ${logoDataURL?`<img src="${logoDataURL}" alt="Logo" style="max-height:44px;max-width:90px;object-fit:contain">`:''}
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#111">${d.bizName}</div>
+          ${getVal('bizAddress')?`<div style="font-size:10px;color:#888">${escHtml(getVal('bizAddress'))}</div>`:''}
+          ${getVal('bizGstin')?`<div style="font-size:10px;color:${G};font-weight:600">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:''}
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:15px;font-weight:800;color:${G}">TAX INVOICE</div>
+        <div style="font-size:11px;color:#555;margin-top:2px"><strong>${escHtml(getVal('invoiceNo'))||'—'}</strong> &nbsp;|&nbsp; ${fmtDate(getVal('invoiceDate'))||'—'}</div>
+        ${getVal('refNo')?`<div style="font-size:10px;color:#888">Ref: ${escHtml(getVal('refNo'))}</div>`:''}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:${d.hasShipTo?'1fr 1fr 1fr':'1fr 1fr'};gap:1rem;margin-bottom:8px;padding:6px 8px;background:#f0faf5;border-radius:5px;border:1px solid #c3e6d8">
+      <div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${G};margin-bottom:3px">From</div>
+        <div style="font-weight:600;color:#111">${d.bizName}</div>
+        ${getVal('bizPhone')?`<div style="color:#666">${escHtml(getVal('bizPhone'))}</div>`:''}
+        ${getVal('bizEmail')?`<div style="color:#666">${escHtml(getVal('bizEmail'))}</div>`:''}
+      </div>
+      <div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${G};margin-bottom:3px">Bill To</div>
+        <div style="font-weight:600;color:#111">${escHtml(getVal('clientName'))||'—'}</div>
+        ${getVal('clientPhone')?`<div style="color:#666">${escHtml(getVal('clientPhone'))}</div>`:''}
+        ${getVal('clientAddress')?`<div style="color:#666">${escHtml(getVal('clientAddress'))}</div>`:''}
+        ${getVal('clientGstin')?`<div style="color:${G};font-weight:600">GSTIN: ${escHtml(getVal('clientGstin'))}</div>`:''}
+      </div>
+      ${d.hasShipTo?`<div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${G};margin-bottom:3px">🚚 Ship To</div>
+        <div style="font-weight:600;color:#111">${escHtml(d.shipName)||escHtml(getVal('clientName'))||'—'}</div>
+        ${d.shipAddr?`<div style="color:#666">${escHtml(d.shipAddr)}</div>`:''}
+        ${d.shipState?`<div style="color:#666">${escHtml(d.shipState)}</div>`:''}
+        ${d.shipGstin?`<div style="color:${G};font-weight:600">GSTIN: ${escHtml(d.shipGstin)}</div>`:''}
+      </div>`:''}
+    </div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:6px">
+      <thead><tr style="background:${G};color:#fff">
+        <th style="padding:5px 7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:0.07em">#</th>
+        <th style="padding:5px 7px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:0.07em">Description</th>
+        <th style="padding:5px 7px;text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:0.07em">Qty</th>
+        <th style="padding:5px 7px;text-align:right;font-size:9px;text-transform:uppercase;letter-spacing:0.07em">Rate</th>
+        <th style="padding:5px 7px;text-align:right;font-size:9px;text-transform:uppercase;letter-spacing:0.07em">Amount</th>
+      </tr></thead>
+      <tbody>${items.length===0?`<tr><td colspan="5" style="padding:0.75rem;text-align:center;color:#aaa">No items added</td></tr>`:
+        items.map((item,idx)=>{
+          const amt=(parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+          const bg=idx%2===0?'#fff':'#f8fdf9';
+          return `<tr style="background:${bg}">
+            <td style="padding:4px 7px;color:#888;border-bottom:1px solid #e8f5ee">${idx+1}</td>
+            <td style="padding:4px 7px;border-bottom:1px solid #e8f5ee">${escHtml(item.desc)||'—'}${item.hsn?`<span style="color:#aaa;font-size:9px"> [${escHtml(item.hsn)}]</span>`:''}</td>
+            <td style="padding:4px 7px;text-align:center;border-bottom:1px solid #e8f5ee">${item.qty}</td>
+            <td style="padding:4px 7px;text-align:right;border-bottom:1px solid #e8f5ee">${fmtINR(parseFloat(item.price||0),d.s)}</td>
+            <td style="padding:4px 7px;text-align:right;font-weight:600;border-bottom:1px solid #e8f5ee">${fmtINR(amt,d.s)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    ${d.gstInvHTML}
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div style="flex:1;padding-right:1rem">
+        ${d.notesHTML}${d.upiHTML}${d.termsHTML}
+      </div>
+      <div style="min-width:200px;border:1px solid #c3e6d8;border-radius:6px;overflow:hidden">
+        <div style="background:#f0faf5;padding:4px 8px;display:flex;justify-content:space-between;font-size:10px;color:#555"><span>Subtotal</span><span>${fmtINR(d.sub,d.s)}</span></div>
+        ${d.discAmt>0?`<div style="background:#f0faf5;padding:4px 8px;display:flex;justify-content:space-between;font-size:10px;color:#1a7f5a"><span>${discountLabel()}</span><span>−${fmtINR(d.discAmt,d.s)}</span></div><div style="background:#f0faf5;padding:4px 8px;display:flex;justify-content:space-between;font-size:10px;color:#555"><span>Taxable</span><span>${fmtINR(d.taxable,d.s)}</span></div>`:''}
+        ${d.gstOn?`<div style="background:#f0faf5;padding:4px 8px;display:flex;justify-content:space-between;font-size:10px;color:#555"><span>GST (${d.gstRate}%)</span><span>${fmtINR(d.gstAmt,d.s)}</span></div>`:''}
+        <div style="background:${G};color:#fff;padding:6px 8px;display:flex;justify-content:space-between;font-weight:700"><span>TOTAL DUE</span><span>${fmtINR(d.total,d.s)}</span></div>
+      </div>
+    </div>
+    ${d.wordsHTML}
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;border-top:2px solid ${G};padding-top:6px;margin-top:4px">
+      <div style="font-size:10px;color:#aaa;font-style:italic">This is a computer-generated invoice.</div>
+      <div style="text-align:center;min-width:150px">
+        <div style="border-top:1px solid #555;padding-top:3px;margin-top:24px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#555">For ${d.bizName}</div>
+        <div style="font-size:9px;color:#888">Authorised Signatory</div>
+      </div>
+    </div>
+  </div>`;
+}
+
 // ── PREVIEW ────────────────────────────────────────
 function updatePreview() {
   try { _renderPreview(); } catch(e) {
@@ -1063,141 +1555,896 @@ function updatePreview() {
 }
 function _renderPreview() {
   recalcTotals();
-  const s=sym();
-  const sub=items.reduce((a,i)=>a+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0);
-  const discAmt=calcDiscount(sub);
-  const taxable=Math.max(0, sub-discAmt);
-  const gstOn=gstIsOn(), gstRate=gstOn?(parseFloat(getVal('gstRate'))||0):0;
-  const gstAmt=taxable*(gstRate/100);
-  const total=taxable+gstAmt;
-  const gstType=gstOn?getVal('gstType'):'';
-
-  const logoHTML=logoDataURL?`<img src="${logoDataURL}" alt="Logo">`:`<div class="inv-logo-placeholder">🏢</div>`;
-
-  const itemRowsHTML=items.length===0
-    ?`<tr><td colspan="4" style="text-align:center;padding:1rem;color:var(--ink-4);font-style:italic">No items added</td></tr>`
-    :items.map((item,idx)=>{
-      const amt=(parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
-      return `<tr>
-        <td>${idx+1}. ${escHtml(item.desc)||'—'}<br>
-          <span style="font-size:9px;color:var(--ink-4);letter-spacing:0.04em;text-transform:uppercase">${item.type||'Service'}${item.hsn?` · HSN/SAC: ${escHtml(item.hsn)}`:''}</span>
-        </td>
-        <td style="text-align:right">${item.qty}</td>
-        <td style="text-align:right">${fmtINR(parseFloat(item.price||0),s)}</td>
-        <td style="text-align:right;font-weight:600">${fmtINR(amt,s)}</td>
-      </tr>`;
-    }).join('');
-
-  // Totals rows in invoice
-  const discRowHTML = discAmt>0
-    ? `<div class="inv-tot-row disc"><span>${discountLabel()}</span><span>−${fmtINR(discAmt,s)}</span></div>
-       <div class="inv-tot-row taxable"><span>Taxable Amount</span><span>${fmtINR(taxable,s)}</span></div>`
-    : '';
-
-  let gstInvHTML='';
-  if(gstOn && gstAmt>0) {
-    const hsn=getVal('hsnCode'), pos=getVal('placeOfSupply');
-    const typeLabel=gstType==='cgst_sgst'?'CGST + SGST':'IGST';
-    const typeBadge=`<span class="inv-gst-badge">${typeLabel}</span>`;
-    let rows='';
-    if(gstType==='cgst_sgst') {
-      const half=gstAmt/2, hr=gstRate/2;
-      rows=`<thead><tr><td>Tax Component</td><td>Rate</td><td>Taxable Value</td><td>Tax Amount</td></tr></thead>
-        <tbody><tr><td>CGST</td><td>${hr}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(half,s)}</td></tr>
-        <tr><td>SGST</td><td>${hr}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(half,s)}</td></tr>
-        <tr><td><strong>Total GST</strong></td><td>${gstRate}%</td><td>—</td><td><strong>${fmtINR(gstAmt,s)}</strong></td></tr></tbody>`;
-    } else {
-      rows=`<thead><tr><td>Tax Component</td><td>Rate</td><td>Taxable Value</td><td>Tax Amount</td></tr></thead>
-        <tbody><tr><td>IGST</td><td>${gstRate}%</td><td>${fmtINR(taxable,s)}</td><td>${fmtINR(gstAmt,s)}</td></tr>
-        <tr><td><strong>Total GST</strong></td><td>${gstRate}%</td><td>—</td><td><strong>${fmtINR(gstAmt,s)}</strong></td></tr></tbody>`;
-    }
-    gstInvHTML=`<div class="inv-gst-section">
-      <div class="inv-gst-section-title">Tax Summary &nbsp;${typeBadge}
-        ${hsn?`<span style="color:var(--ink-4);margin:0 4px">|</span> HSN/SAC: <strong style="color:var(--ink-2)">${escHtml(hsn)}</strong>`:''}
-        ${pos?`<span style="color:var(--ink-4);margin:0 4px">|</span> Place of Supply: <strong style="color:var(--ink-2)">${escHtml(pos)}</strong>`:''}
-      </div>
-      <table class="inv-gst-table">${rows}</table>
-    </div>`;
+  const d = getTemplateData();
+  let html = '';
+  switch(currentTemplate) {
+    case 'modern':      html = renderModern(d); break;
+    case 'traditional': html = renderTraditional(d); break;
+    case 'compact':     html = renderCompact(d); break;
+    default:            html = renderClassic(d); break;
   }
-
-  let gstTotRow='';
-  if(gstOn) {
-    if(gstType==='cgst_sgst') { const h=gstAmt/2, hr=gstRate/2; gstTotRow=`<div class="inv-tot-row"><span>CGST (${hr}%)</span><span>${fmtINR(h,s)}</span></div><div class="inv-tot-row"><span>SGST (${hr}%)</span><span>${fmtINR(h,s)}</span></div>`; }
-    else gstTotRow=`<div class="inv-tot-row"><span>IGST (${gstRate}%)</span><span>${fmtINR(gstAmt,s)}</span></div>`;
-  }
-
-  const notesHTML=getVal('notes')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px">Payment Details</div><div style="font-size:10px;color:var(--ink-2);white-space:pre-line;background:var(--paper);border:1px solid var(--paper-3);border-radius:6px;padding:8px 10px">${escHtml(getVal('notes'))}</div></div>`:'';
-  const upiHTML=getVal('upiId')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:3px">UPI</div><div style="font-size:10px;color:var(--ink-2);font-weight:500">📲 ${escHtml(getVal('upiId'))}</div></div>`:'';
-  const termsHTML=getVal('terms')?`<div style="margin-bottom:0.6rem"><div style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px">Terms &amp; Conditions</div><div style="font-size:10px;color:var(--ink-3)">${escHtml(getVal('terms'))}</div></div>`:'';
-  const refHTML=getVal('refNo')?`<div style="font-size:10px;color:var(--ink-3);margin-top:3px">Ref: ${escHtml(getVal('refNo'))}</div>`:'';
-
-  const bizName=escHtml(getVal('bizName'))||'Your Business';
-  const bizGstinHTML=getVal('bizGstin')?`<div class="inv-party-detail" style="color:var(--accent-dark);font-weight:500">GSTIN: ${escHtml(getVal('bizGstin'))}</div>`:'';
-  const clientGstinHTML=getVal('clientGstin')?`<div class="inv-party-detail" style="color:var(--accent-dark);font-weight:500">GSTIN: ${escHtml(getVal('clientGstin'))}</div>`:'';
-
-  // Amount in words uses final grand total
-  const wordsHTML=`<div class="inv-amount-words"><strong>Amount in Words:</strong> ${amountInWords(total,s)}</div>`;
-  const signHTML=`<div class="inv-sign-block"><div class="inv-sign-inner"><div class="inv-sign-line"></div><div class="inv-sign-label">For ${bizName}</div><div class="inv-sign-name">Authorised Signatory</div></div></div>`;
-
-  document.getElementById('invoiceSheet').innerHTML=`
-    <div class="inv-top-bar"></div>
-    <div class="inv-body">
-      <div class="inv-header">
-        <div class="inv-logo-area">${logoHTML}</div>
-        <div class="inv-meta">
-          <div class="inv-title-text">Invoice</div>
-          <div class="inv-number">${escHtml(getVal('invoiceNo'))||'INV/2025-26/001'}</div>
-          ${refHTML}
-          <div class="inv-date" style="margin-top:5px"><strong>Date:</strong> ${fmtDate(getVal('invoiceDate'))||'—'}</div>
-        </div>
-      </div>
-      <div class="inv-parties">
-        <div>
-          <div class="inv-party-label">From</div>
-          <div class="inv-party-name">${bizName}</div>
-          ${getVal('bizAddress')?`<div class="inv-party-detail">${escHtml(getVal('bizAddress'))}</div>`:''}
-          ${getVal('bizEmail')?`<div class="inv-party-detail">${escHtml(getVal('bizEmail'))}</div>`:''}
-          ${getVal('bizPhone')?`<div class="inv-party-detail">${escHtml(getVal('bizPhone'))}</div>`:''}
-          ${bizGstinHTML}
-        </div>
-        <div>
-          <div class="inv-party-label">Bill To</div>
-          <div class="inv-party-name">${escHtml(getVal('clientName'))||'Client Name'}</div>
-          ${getVal('clientEmail')?`<div class="inv-party-detail">${escHtml(getVal('clientEmail'))}</div>`:''}
-          ${getVal('clientPhone')?`<div class="inv-party-detail">${escHtml(getVal('clientPhone'))}</div>`:''}
-          ${getVal('clientAddress')?`<div class="inv-party-detail">${escHtml(getVal('clientAddress'))}</div>`:''}
-          ${clientGstinHTML}
-        </div>
-      </div>
-      <table class="inv-table">
-        <thead><tr><th>Description</th><th style="text-align:right">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Amount</th></tr></thead>
-        <tbody>${itemRowsHTML}</tbody>
-      </table>
-      ${gstInvHTML}
-      <div class="inv-totals-section">
-        <div class="inv-totals-inner">
-          <div class="inv-tot-row"><span>Subtotal</span><span>${fmtINR(sub,s)}</span></div>
-          ${discRowHTML}${gstTotRow}
-          <hr class="inv-tot-divider">
-          <div class="inv-tot-grand"><span class="gl">Total Due</span><span class="gv">${fmtINR(total,s)}</span></div>
-        </div>
-      </div>
-      ${wordsHTML}${notesHTML}${upiHTML}${termsHTML}${signHTML}
-      <div class="inv-footer-band">
-        <p>${bizName}${getVal('bizEmail')?' · '+escHtml(getVal('bizEmail')):''}</p>
-        <span class="thank">This is a computer-generated invoice.</span>
-      </div>
-    </div>`;
+  document.getElementById('invoiceSheet').innerHTML = html;
 }
 
 // ── PDF ─────────────────────────────────────────────
-async function downloadPDF() {
+// ── VECTOR PDF (CLASSIC TEMPLATE) — sharp, selectable text ──
+function loadImageDims(dataUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve({ w: img.naturalWidth, h: img.naturalHeight });
+    img.onerror = () => resolve({ w: 1, h: 1 });
+    img.src = dataUrl;
+  });
+}
+function getImageFormat(dataUrl) {
+  const m = dataUrl.match(/^data:image\/(\w+);/);
+  if (!m) return 'PNG';
+  let f = m[1].toUpperCase();
+  if (f === 'JPG') f = 'JPEG';
+  if (!['PNG','JPEG','WEBP'].includes(f)) f = 'PNG';
+  return f;
+}
+
+// jsPDF's standard fonts (Helvetica/Times) don't include the ₹ glyph — it renders
+// as a broken character. Use "Rs." prefix for vector PDF text instead.
+function pdfMoney(num, currency) {
+  if (currency === '₹') {
+    const [ip, dp] = num.toFixed(2).split('.');
+    let formatted;
+    if (ip.length <= 3) formatted = ip;
+    else {
+      const last3 = ip.slice(-3);
+      const rest = ip.slice(0, ip.length-3);
+      formatted = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + last3;
+    }
+    return 'Rs. ' + formatted + '.' + dp;
+  }
+  return fmtINR(num, currency);
+}
+
+// Shared calculation block reused by all template PDF generators
+function computeInvoiceCalc() {
+  const s = sym();
+  const sub = items.reduce((a,i)=>a+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0);
+  const discAmt = calcDiscount(sub);
+  const taxable = Math.max(0, sub-discAmt);
+  const gstOn = gstIsOn();
+  const gstRate = gstOn ? (parseFloat(getVal('gstRate'))||0) : 0;
+  const gstAmt = taxable*(gstRate/100);
+  const total = taxable+gstAmt;
+  const gstType = gstOn ? getVal('gstType') : '';
+  return {s,sub,discAmt,taxable,gstOn,gstRate,gstAmt,total,gstType};
+}
+
+async function generateClassicPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const M = 15, PW = 210, PH = 297, CW = PW - 2*M;
+  const C = {
+    ink:[15,14,13], ink2:[58,56,52], ink3:[122,118,112], ink4:[184,180,172],
+    paper:[250,249,247], paper3:[232,228,220],
+    accent:[200,169,110], accentDark:[157,124,66], green:[26,127,90]
+  };
+
+  const s = sym();
+  const sub = items.reduce((a,i)=>a+(parseFloat(i.qty)||0)*(parseFloat(i.price)||0),0);
+  const discAmt = calcDiscount(sub);
+  const taxable = Math.max(0, sub-discAmt);
+  const gstOn = gstIsOn();
+  const gstRate = gstOn ? (parseFloat(getVal('gstRate'))||0) : 0;
+  const gstAmt = taxable*(gstRate/100);
+  const total = taxable+gstAmt;
+  const gstType = gstOn ? getVal('gstType') : '';
+  const bizName = getVal('bizName') || 'Your Business';
+
+  let y = 0;
+
+  function drawTopBar() { doc.setFillColor(...C.ink); doc.rect(0,0,PW,4,'F'); }
+  function setF(style, size, color) {
+    doc.setFont('helvetica', style||'normal');
+    doc.setFontSize(size||9);
+    doc.setTextColor(...(color||C.ink2));
+  }
+  function checkPageBreak(needed) {
+    if (y + needed > PH - 15) { doc.addPage(); drawTopBar(); y = 14; }
+  }
+
+  drawTopBar();
+  y = 14;
+
+  // HEADER
+  const logoBoxW = 40, logoBoxH = 20;
+  if (logoDataURL) {
+    try {
+      const dims = await loadImageDims(logoDataURL);
+      const r = dims.w / dims.h;
+      let w = logoBoxW, h = logoBoxW / r;
+      if (h > logoBoxH) { h = logoBoxH; w = logoBoxH * r; }
+      doc.addImage(logoDataURL, getImageFormat(logoDataURL), M, y, w, h);
+    } catch(e) {}
+  } else {
+    doc.setDrawColor(...C.paper3); doc.setLineWidth(0.3);
+    doc.rect(M, y, logoBoxW, logoBoxH);
+    setF('normal',7,C.ink4);
+    doc.text('LOGO', M+logoBoxW/2, y+logoBoxH/2, {align:'center'});
+  }
+
+  const rightX = PW - M;
+  doc.setFont('times','bold'); doc.setFontSize(22); doc.setTextColor(...C.ink);
+  doc.text('Invoice', rightX, y+7, {align:'right'});
+  setF('bold',10,C.accentDark);
+  doc.text(getVal('invoiceNo')||'INV/2025-26/001', rightX, y+13, {align:'right'});
+  let metaY = y+13;
+  if (getVal('refNo')) { metaY+=4; setF('normal',8,C.ink3); doc.text('Ref: '+getVal('refNo'), rightX, metaY, {align:'right'}); }
+  metaY+=5; setF('normal',8,C.ink3);
+  doc.text('Date: '+(fmtDate(getVal('invoiceDate'))||'-'), rightX, metaY, {align:'right'});
+
+  y += 24;
+
+  // PARTIES
+  const hasShipTo = !!(getVal('shipName')||getVal('shipAddress'));
+  const cols = hasShipTo ? 3 : 2;
+  const gap = 4;
+  const colW = (CW - gap*(cols-1)) / cols;
+
+  doc.setFontSize(8);
+  function buildParty(label, name, extras) {
+    const lines = [];
+    extras.forEach(t => { if (t) lines.push(...doc.splitTextToSize(t, colW-6)); });
+    return { label, name, lines };
+  }
+  const partyFrom = buildParty('From', bizName, [getVal('bizAddress'), getVal('bizEmail'), getVal('bizPhone'), getVal('bizGstin')?('GSTIN: '+getVal('bizGstin')):'']);
+  const partyBill = buildParty('Bill To', getVal('clientName')||'Client Name', [getVal('clientEmail'), getVal('clientPhone'), getVal('clientAddress'), getVal('clientGstin')?('GSTIN: '+getVal('clientGstin')):'']);
+  let partyShip = null;
+  if (hasShipTo) partyShip = buildParty('Ship To', getVal('shipName')||getVal('clientName')||'-', [getVal('shipAddress'), getVal('shipState'), getVal('shipGstin')?('GSTIN: '+getVal('shipGstin')):'']);
+  const partyCols = hasShipTo ? [partyFrom,partyBill,partyShip] : [partyFrom,partyBill];
+  const maxLines = Math.max(...partyCols.map(p=>p.lines.length));
+  const boxH = 12 + maxLines*4 + 4;
+
+  checkPageBreak(boxH+6);
+  doc.setFillColor(...C.paper); doc.setDrawColor(...C.paper3); doc.setLineWidth(0.3);
+  doc.rect(M,y,CW,boxH,'FD');
+  partyCols.forEach((p, idx) => {
+    const cx = M + idx*(colW+gap);
+    if (idx>0) { doc.setDrawColor(...C.paper3); doc.line(cx-gap/2, y, cx-gap/2, y+boxH); }
+    setF('bold',7,C.ink4); doc.text(p.label.toUpperCase(), cx+3, y+5);
+    setF('bold',10,C.ink); doc.text(p.name, cx+3, y+10);
+    setF('normal',8,C.ink3);
+    p.lines.forEach((ln,i) => doc.text(ln, cx+3, y+14+i*4));
+  });
+  y += boxH+6;
+
+  // ITEMS TABLE
+  const colNo=10, colDesc=90, colQty=18, colRate=30, colAmt=32;
+  const xNo=M, xDesc=M+colNo, xQty=M+colNo+colDesc, xRate=xQty+colQty, xAmt=xRate+colRate;
+
+  function drawTableHeader() {
+    setF('bold',8,C.ink2);
+    doc.text('#', xNo+1, y+4);
+    doc.text('DESCRIPTION', xDesc+1, y+4);
+    doc.text('QTY', xQty+colQty-1, y+4, {align:'right'});
+    doc.text('RATE', xRate+colRate-1, y+4, {align:'right'});
+    doc.text('AMOUNT', xAmt+colAmt-1, y+4, {align:'right'});
+    doc.setDrawColor(...C.ink); doc.setLineWidth(0.5);
+    doc.line(M, y+6, M+CW, y+6);
+    y += 8;
+  }
+  checkPageBreak(20);
+  drawTableHeader();
+
+  if (items.length === 0) {
+    setF('normal',9,C.ink4);
+    doc.text('No items added', M+CW/2, y+6, {align:'center'});
+    y += 12;
+  } else {
+    items.forEach((item, idx) => {
+      doc.setFontSize(9);
+      const descLines = doc.splitTextToSize(`${idx+1}. ${item.desc||'-'}`, colDesc-4);
+      const subLine = `${item.type||'Service'}${item.hsn?(' - HSN/SAC: '+item.hsn):''}`;
+      const descBlockH = descLines.length*4;      // height used by description lines
+      const subLineY = 4 + descBlockH + 3.5;        // gap before the small type/HSN caption
+      const rowH = Math.max(subLineY + 4, 12);      // ensure bottom padding below caption
+      checkPageBreak(rowH+2);
+      setF('normal',9,C.ink2);
+      descLines.forEach((ln,i) => doc.text(ln, xDesc+1, y+4+i*4));
+      setF('normal',6.5,C.ink4);
+      doc.text(subLine, xDesc+1, y+subLineY);
+      const amt = (parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+      setF('normal',9,C.ink2);
+      doc.text(String(item.qty), xQty+colQty-1, y+4, {align:'right'});
+      doc.text(pdfMoney(parseFloat(item.price||0),s), xRate+colRate-1, y+4, {align:'right'});
+      setF('bold',9,C.ink);
+      doc.text(pdfMoney(amt,s), xAmt+colAmt-1, y+4, {align:'right'});
+      doc.setDrawColor(...C.paper3); doc.setLineWidth(0.2);
+      doc.line(M, y+rowH, M+CW, y+rowH);
+      y += rowH;
+    });
+  }
+  doc.setDrawColor(...C.ink); doc.setLineWidth(0.5);
+  doc.line(M, y, M+CW, y);
+  y += 6;
+
+  // GST SECTION
+  if (gstOn && gstAmt > 0) {
+    checkPageBreak(30);
+    const hsn = getVal('hsnCode'), pos = getVal('placeOfSupply');
+    const typeLabel = gstType==='cgst_sgst' ? 'CGST + SGST' : 'IGST';
+    setF('bold',8,C.ink4);
+    let headerLine = `TAX SUMMARY (${typeLabel})`;
+    if (hsn) headerLine += `  |  HSN/SAC: ${hsn}`;
+    if (pos) headerLine += `  |  Place of Supply: ${pos}`;
+    doc.text(headerLine, M, y+4);
+    y += 8;
+    const gc = [45,25,55,55];
+    const gx = [M, M+gc[0], M+gc[0]+gc[1], M+gc[0]+gc[1]+gc[2]];
+    setF('bold',7,C.ink4);
+    doc.text('COMPONENT',gx[0],y); doc.text('RATE',gx[1],y); doc.text('TAXABLE VALUE',gx[2],y);
+    doc.text('TAX AMOUNT',gx[3]+gc[3]-1,y,{align:'right'});
+    y += 2; doc.setDrawColor(...C.paper3); doc.line(M,y,M+CW,y); y += 4;
+    setF('normal',8,C.ink3);
+    if (gstType === 'cgst_sgst') {
+      const half = gstAmt/2, hr = gstRate/2;
+      [['CGST',hr,taxable,half],['SGST',hr,taxable,half]].forEach(row => {
+        doc.text(row[0],gx[0],y); doc.text(row[1]+'%',gx[1],y); doc.text(pdfMoney(row[2],s),gx[2],y);
+        doc.text(pdfMoney(row[3],s),gx[3]+gc[3]-1,y,{align:'right'});
+        y += 5;
+      });
+    } else {
+      doc.text('IGST',gx[0],y); doc.text(gstRate+'%',gx[1],y); doc.text(pdfMoney(taxable,s),gx[2],y);
+      doc.text(pdfMoney(gstAmt,s),gx[3]+gc[3]-1,y,{align:'right'});
+      y += 5;
+    }
+    setF('bold',8,C.ink2);
+    doc.text('Total GST',gx[0],y); doc.text(gstRate+'%',gx[1],y); doc.text('-',gx[2],y);
+    doc.text(pdfMoney(gstAmt,s),gx[3]+gc[3]-1,y,{align:'right'});
+    y += 8;
+  }
+
+  // TOTALS
+  checkPageBreak(40);
+  const totW = 75, totX = M+CW-totW;
+  setF('normal',9,C.ink3);
+  doc.text('Subtotal', totX, y); doc.text(pdfMoney(sub,s), totX+totW, y, {align:'right'});
+  y += 5;
+  if (discAmt > 0) {
+    setF('normal',9,C.green);
+    doc.text(discountLabel(), totX, y); doc.text('-'+pdfMoney(discAmt,s), totX+totW, y, {align:'right'});
+    y += 5;
+    setF('normal',9,C.ink3);
+    doc.text('Taxable Amount', totX, y); doc.text(pdfMoney(taxable,s), totX+totW, y, {align:'right'});
+    y += 5;
+  }
+  if (gstOn) {
+    if (gstType === 'cgst_sgst') {
+      const half = gstAmt/2, hr = gstRate/2;
+      doc.text(`CGST (${hr}%)`, totX, y); doc.text(pdfMoney(half,s), totX+totW, y, {align:'right'}); y+=5;
+      doc.text(`SGST (${hr}%)`, totX, y); doc.text(pdfMoney(half,s), totX+totW, y, {align:'right'}); y+=5;
+    } else {
+      doc.text(`IGST (${gstRate}%)`, totX, y); doc.text(pdfMoney(gstAmt,s), totX+totW, y, {align:'right'}); y+=5;
+    }
+  }
+  doc.setDrawColor(...C.ink); doc.setLineWidth(0.4);
+  doc.line(totX, y, totX+totW, y);
+  y += 6;
+  setF('bold',9,C.ink);
+  doc.text('TOTAL DUE', totX, y+2);
+  doc.setFont('times','bold'); doc.setFontSize(15); doc.setTextColor(...C.ink);
+  doc.text(pdfMoney(total,s), totX+totW, y+3, {align:'right'});
+  y += 12;
+
+  // AMOUNT IN WORDS
+  checkPageBreak(14);
+  const wordsText = 'Amount in Words: ' + amountInWords(total,s);
+  doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(...C.ink2);
+  const wordsLines = doc.splitTextToSize(wordsText, CW-6);
+  const wordsH = wordsLines.length*4+6;
+  doc.setFillColor(...C.paper); doc.setDrawColor(...C.paper3); doc.setLineWidth(0.3);
+  doc.rect(M,y,CW,wordsH,'FD');
+  wordsLines.forEach((ln,i) => doc.text(ln, M+3, y+5+i*4));
+  y += wordsH+4;
+
+  // NOTES / UPI / TERMS
+  function drawLabeledBlock(label, text, italic) {
+    if (!text) return;
+    checkPageBreak(16);
+    setF('bold',7,C.ink3); doc.text(label.toUpperCase(), M, y+3);
+    y += 6;
+    doc.setFont('helvetica', italic?'italic':'normal'); doc.setFontSize(8); doc.setTextColor(...C.ink2);
+    const rawLines = String(text).split('\n');
+    let allLines = [];
+    rawLines.forEach(rl => allLines.push(...doc.splitTextToSize(rl, CW-6)));
+    allLines.forEach((ln,i) => doc.text(ln, M, y+i*4));
+    y += allLines.length*4 + 5;
+  }
+  drawLabeledBlock('Payment Details', getVal('notes'));
+  if (getVal('upiId')) {
+    checkPageBreak(10);
+    setF('bold',7,C.ink3); doc.text('UPI', M, y+3); y += 6;
+    setF('normal',8,C.ink2); doc.text(getVal('upiId'), M, y); y += 8;
+  }
+  drawLabeledBlock('Terms & Conditions', getVal('terms'));
+
+  // SIGNATURE
+  checkPageBreak(20);
+  const sigX2 = M+CW, sigX1 = sigX2-60;
+  y += 10;
+  doc.setDrawColor(...C.ink3); doc.setLineWidth(0.3);
+  doc.line(sigX1, y, sigX2, y);
+  y += 4;
+  setF('bold',7,C.ink3); doc.text('For '+bizName, sigX2, y, {align:'right'});
+  y += 4;
+  setF('normal',8,C.ink2); doc.text('Authorised Signatory', sigX2, y, {align:'right'});
+  y += 8;
+
+  // FOOTER
+  checkPageBreak(12);
+  doc.setDrawColor(...C.ink); doc.setLineWidth(0.5);
+  doc.line(M,y,M+CW,y);
+  y += 5;
+  setF('normal',8,C.ink3);
+  doc.text(bizName + (getVal('bizEmail')?(' - '+getVal('bizEmail')):''), M, y);
+  doc.setFont('helvetica','italic');
+  doc.text('This is a computer-generated invoice.', M+CW, y, {align:'right'});
+
+  return doc;
+}
+
+// ── VECTOR PDF: MODERN TEMPLATE ──────────────────
+async function generateModernPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const M = 15, PW = 210, PH = 297, CW = PW - 2*M;
+  const K = { black:[17,17,17], gray:[136,136,136], lgray:[187,187,187], dark:[85,85,85], green:[26,127,90] };
+  const calc = computeInvoiceCalc();
+  const { s, sub, discAmt, taxable, gstOn, gstRate, gstAmt, total, gstType } = calc;
+  const bizName = getVal('bizName') || 'Your Business';
+  let y = 15;
+
+  function setF(style, size, color) { doc.setFont('helvetica', style||'normal'); doc.setFontSize(size||9); doc.setTextColor(...(color||K.dark)); }
+  function checkPageBreak(needed) { if (y + needed > PH - 15) { doc.addPage(); y = 15; } }
+
+  // HEADER
+  setF('bold',9,K.lgray); doc.text('INVOICE', M, y+2);
+  setF('bold',18,K.black); doc.text(bizName, M, y+9);
+  let leftY = y+14;
+  if (getVal('bizAddress')) { setF('normal',8,K.gray); doc.text(getVal('bizAddress'), M, leftY); leftY+=4; }
+  if (getVal('bizEmail')) { setF('normal',8,K.gray); doc.text(getVal('bizEmail'), M, leftY); leftY+=4; }
+  if (getVal('bizGstin')) { setF('bold',8,K.dark); doc.text('GSTIN: '+getVal('bizGstin'), M, leftY); leftY+=4; }
+
+  const rightX = PW-M;
+  let logoH = 0;
+  if (logoDataURL) {
+    try {
+      const dims = await loadImageDims(logoDataURL);
+      const r = dims.w/dims.h; let w=35,h=35/r; if(h>16){h=16;w=16*r;}
+      doc.addImage(logoDataURL, getImageFormat(logoDataURL), rightX-w, y, w, h);
+      logoH = h+3;
+    } catch(e) {}
+  }
+  setF('bold',15,K.black); doc.text(getVal('invoiceNo')||'INV/2025-26/001', rightX, y+logoH+5, {align:'right'});
+  setF('normal',8,K.gray); doc.text(fmtDate(getVal('invoiceDate'))||'-', rightX, y+logoH+10, {align:'right'});
+  if (getVal('refNo')) doc.text('Ref: '+getVal('refNo'), rightX, y+logoH+14, {align:'right'});
+
+  y = Math.max(leftY, y+logoH+16) + 4;
+  doc.setDrawColor(...K.black); doc.setLineWidth(0.8);
+  doc.line(M,y,M+CW,y);
+  y += 8;
+
+  // PARTIES
+  const hasShipTo = !!(getVal('shipName')||getVal('shipAddress'));
+  const cols = hasShipTo ? 3 : 2;
+  const colW = CW/cols;
+  doc.setFontSize(8);
+  function party(x, label, name, lines) {
+    setF('bold',7,K.lgray); doc.text(label.toUpperCase(), x, y);
+    setF('bold',9,K.black); doc.text(name, x, y+5);
+    setF('normal',8,K.gray);
+    lines.forEach((ln,i) => { if(ln) doc.text(ln, x, y+9+i*4); });
+  }
+  party(M, 'From', bizName, [getVal('bizPhone')]);
+  party(M+colW, 'Bill To', getVal('clientName')||'-', [getVal('clientEmail'), getVal('clientPhone'), getVal('clientAddress'), getVal('clientGstin')?('GSTIN: '+getVal('clientGstin')):'']);
+  if (hasShipTo) party(M+colW*2, 'Ship To', getVal('shipName')||getVal('clientName')||'-', [getVal('shipAddress'), getVal('shipState'), getVal('shipGstin')?('GSTIN: '+getVal('shipGstin')):'']);
+  y += 26;
+
+  // ITEMS TABLE
+  const colNo=10, colDesc=90, colQty=18, colRate=30, colAmt=32;
+  const xNo=M, xDesc=M+colNo, xQty=M+colNo+colDesc, xRate=xQty+colQty, xAmt=xRate+colRate;
+  function drawHeader() {
+    setF('bold',8,K.gray);
+    doc.text('DESCRIPTION', xDesc+1, y);
+    doc.text('QTY', xQty+colQty-1, y, {align:'right'});
+    doc.text('RATE', xRate+colRate-1, y, {align:'right'});
+    doc.text('AMOUNT', xAmt+colAmt-1, y, {align:'right'});
+    doc.setDrawColor(...K.black); doc.setLineWidth(0.5);
+    y += 2; doc.line(M,y,M+CW,y); y += 6;
+  }
+  checkPageBreak(20); drawHeader();
+
+  if (items.length===0) { setF('normal',9,K.lgray); doc.text('No items added', M+CW/2, y+4, {align:'center'}); y+=10; }
+  else items.forEach((item,idx) => {
+    doc.setFontSize(9);
+    const descLines = doc.splitTextToSize(`${idx+1}. ${item.desc||'-'}`, colDesc-4);
+    const subLine = `${item.type||'Service'}${item.hsn?(' - HSN/SAC: '+item.hsn):''}`;
+    const subY = descLines.length*4 + 3.5;
+    const rowH = Math.max(subY+4, 12);
+    checkPageBreak(rowH+2);
+    setF('normal',9,K.dark);
+    descLines.forEach((ln,i) => doc.text(ln, xDesc+1, y+i*4));
+    setF('normal',6.5,K.lgray); doc.text(subLine, xDesc+1, y+subY);
+    const amt = (parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+    setF('normal',9,K.dark);
+    doc.text(String(item.qty), xQty+colQty-1, y, {align:'right'});
+    doc.text(pdfMoney(parseFloat(item.price||0),s), xRate+colRate-1, y, {align:'right'});
+    setF('bold',9,K.black);
+    doc.text(pdfMoney(amt,s), xAmt+colAmt-1, y, {align:'right'});
+    y += rowH;
+  });
+  y += 4;
+
+  // GST SECTION
+  if (gstOn && gstAmt>0) {
+    checkPageBreak(28);
+    const hsn=getVal('hsnCode'), pos=getVal('placeOfSupply');
+    const typeLabel = gstType==='cgst_sgst'?'CGST + SGST':'IGST';
+    setF('bold',8,K.lgray);
+    let hdr = `TAX SUMMARY (${typeLabel})`;
+    if (hsn) hdr += `  |  HSN/SAC: ${hsn}`;
+    if (pos) hdr += `  |  Place of Supply: ${pos}`;
+    doc.text(hdr, M, y); y += 6;
+    setF('normal',8,K.dark);
+    if (gstType==='cgst_sgst') {
+      const half=gstAmt/2, hr=gstRate/2;
+      doc.text(`CGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=5;
+      doc.text(`SGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=5;
+    } else {
+      doc.text(`IGST @ ${gstRate}%`, M, y); doc.text(pdfMoney(gstAmt,s), M+CW, y, {align:'right'}); y+=5;
+    }
+    y += 4;
+  }
+
+  // TOTALS
+  checkPageBreak(40);
+  const totW=75, totX=M+CW-totW;
+  setF('normal',9,K.gray);
+  doc.text('Subtotal', totX, y); doc.text(pdfMoney(sub,s), totX+totW, y, {align:'right'}); y+=5;
+  if (discAmt>0) {
+    setF('normal',9,K.green);
+    doc.text(discountLabel(), totX, y); doc.text('-'+pdfMoney(discAmt,s), totX+totW, y, {align:'right'}); y+=5;
+    setF('normal',9,K.gray);
+    doc.text('Taxable Amount', totX, y); doc.text(pdfMoney(taxable,s), totX+totW, y, {align:'right'}); y+=5;
+  }
+  if (gstOn) {
+    if (gstType==='cgst_sgst') { const h=gstAmt/2,hr=gstRate/2; doc.text(`CGST (${hr}%)`,totX,y);doc.text(pdfMoney(h,s),totX+totW,y,{align:'right'});y+=5; doc.text(`SGST (${hr}%)`,totX,y);doc.text(pdfMoney(h,s),totX+totW,y,{align:'right'});y+=5; }
+    else { doc.text(`IGST (${gstRate}%)`,totX,y);doc.text(pdfMoney(gstAmt,s),totX+totW,y,{align:'right'});y+=5; }
+  }
+  doc.setDrawColor(...K.black); doc.setLineWidth(0.8);
+  doc.line(totX,y,totX+totW,y); y+=7;
+  setF('bold',9,K.black); doc.text('TOTAL DUE', totX, y);
+  setF('bold',16,K.black); doc.text(pdfMoney(total,s), totX+totW, y+1, {align:'right'});
+  y += 12;
+
+  // AMOUNT IN WORDS
+  checkPageBreak(10);
+  doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(...K.dark);
+  const wordsLines = doc.splitTextToSize('Amount in Words: '+amountInWords(total,s), CW);
+  wordsLines.forEach((ln,i)=>doc.text(ln, M, y+i*4));
+  y += wordsLines.length*4 + 6;
+
+  // NOTES / UPI / TERMS
+  function block(label, text, italic) {
+    if (!text) return;
+    checkPageBreak(14);
+    setF('bold',7,K.gray); doc.text(label.toUpperCase(), M, y); y+=5;
+    doc.setFont('helvetica', italic?'italic':'normal'); doc.setFontSize(8); doc.setTextColor(...K.dark);
+    const raw = String(text).split('\n'); let lines=[];
+    raw.forEach(r=>lines.push(...doc.splitTextToSize(r, CW)));
+    lines.forEach((ln,i)=>doc.text(ln, M, y+i*4));
+    y += lines.length*4 + 5;
+  }
+  block('Payment Details', getVal('notes'));
+  if (getVal('upiId')) { checkPageBreak(9); setF('bold',7,K.gray); doc.text('UPI', M, y); y+=5; setF('normal',8,K.dark); doc.text(getVal('upiId'), M, y); y+=7; }
+  block('Terms & Conditions', getVal('terms'));
+
+  // SIGNATURE
+  checkPageBreak(20);
+  const sigX2=M+CW, sigX1=sigX2-60; y+=8;
+  doc.setDrawColor(...K.lgray); doc.setLineWidth(0.3); doc.line(sigX1,y,sigX2,y); y+=4;
+  setF('bold',7,K.gray); doc.text('For '+bizName, sigX2, y, {align:'right'}); y+=4;
+  setF('normal',8,K.dark); doc.text('Authorised Signatory', sigX2, y, {align:'right'}); y+=6;
+
+  // FOOTER
+  checkPageBreak(10);
+  doc.setDrawColor(...K.lgray); doc.setLineWidth(0.3); doc.line(M,y,M+CW,y); y+=5;
+  setF('normal',8,K.lgray);
+  doc.text(bizName, M, y);
+  doc.setFont('helvetica','italic');
+  doc.text('This is a computer-generated invoice.', M+CW, y, {align:'right'});
+
+  return doc;
+}
+
+// ── VECTOR PDF: TRADITIONAL TEMPLATE ─────────────
+async function generateTraditionalPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const M = 12, PW = 210, PH = 297, CW = PW - 2*M;
+  const T = { navy:[26,58,107], lblue:[232,240,251], black:[30,30,30], gray:[85,85,85], lgray:[170,170,170], green:[26,127,90] };
+  const calc = computeInvoiceCalc();
+  const { s, sub, discAmt, taxable, gstOn, gstRate, gstAmt, total, gstType } = calc;
+  const bizName = getVal('bizName') || 'Your Business';
+  let y = M;
+  const pageOuterBorder = () => { doc.setDrawColor(...T.navy); doc.setLineWidth(0.8); doc.rect(M-2, M-2, CW+4, PH-2*(M-2)-6); };
+
+  function setF(style, size, color) { doc.setFont('helvetica', style||'normal'); doc.setFontSize(size||9); doc.setTextColor(...(color||T.black)); }
+  function checkPageBreak(needed) { if (y + needed > PH - 20) { doc.addPage(); pageOuterBorder(); y = M+4; } }
+
+  pageOuterBorder();
+
+  // NAVY HEADER
+  doc.setFillColor(...T.navy); doc.rect(M, y, CW, 20, 'F');
+  let hx = M+5;
+  if (logoDataURL) {
+    try {
+      const dims = await loadImageDims(logoDataURL);
+      const r = dims.w/dims.h; let w=16,h=16/r; if(h>14){h=14;w=14*r;}
+      doc.addImage(logoDataURL, getImageFormat(logoDataURL), hx, y+3, w, h);
+      hx += w+4;
+    } catch(e) {}
+  }
+  setF('bold',15,[255,255,255]); doc.text(bizName, hx, y+9);
+  setF('normal',8,[220,228,245]);
+  let line2 = getVal('bizAddress') || '';
+  if (line2) doc.text(line2, hx, y+14);
+  if (getVal('bizGstin')) doc.text('GSTIN: '+getVal('bizGstin'), hx, y+18);
+  y += 20;
+
+  // TAX INVOICE BAND
+  doc.setFillColor(...T.lblue); doc.rect(M, y, CW, 7, 'F');
+  doc.setDrawColor(...T.navy); doc.setLineWidth(0.4); doc.line(M,y,M+CW,y); doc.line(M,y+7,M+CW,y+7);
+  setF('bold',12,T.navy); doc.text('TAX INVOICE', M+CW/2, y+5, {align:'center'});
+  y += 7;
+
+  // INVOICE META STRIP
+  const metaH = 12;
+  doc.setDrawColor(...T.navy); doc.setLineWidth(0.3); doc.line(M,y+metaH,M+CW,y+metaH);
+  setF('bold',9,T.black); doc.text('Invoice No.: '+(getVal('invoiceNo')||'-'), M+4, y+5);
+  setF('normal',9,T.black); doc.text('Date: '+(fmtDate(getVal('invoiceDate'))||'-'), M+4, y+10);
+  if (getVal('refNo')) doc.text('Ref.: '+getVal('refNo'), M+90, y+5);
+  if (getVal('bizPhone')) doc.text('Phone: '+getVal('bizPhone'), M+90, y+5);
+  if (getVal('bizEmail')) doc.text('Email: '+getVal('bizEmail'), M+90, y+10);
+  y += metaH;
+
+  // PARTIES GRID
+  const hasShipTo = !!(getVal('shipName')||getVal('shipAddress'));
+  const cols = hasShipTo ? 3 : 2;
+  const colW = CW/cols;
+  doc.setFontSize(8);
+  function party(x, w, label, name, lines) {
+    setF('bold',7,T.navy); doc.text(label.toUpperCase(), x+3, y+5);
+    doc.setDrawColor(220,220,220); doc.setLineWidth(0.2); doc.line(x+3,y+6.5,x+w-3,y+6.5);
+    setF('bold',10,T.black); doc.text(name, x+3, y+11);
+    setF('normal',8,T.gray);
+    let ly = y+15;
+    lines.forEach(ln => { if(ln) { doc.text(ln, x+3, ly); ly += 4; } });
+  }
+  const partyBoxH = 24;
+  checkPageBreak(partyBoxH+2);
+  doc.setDrawColor(...T.navy); doc.setLineWidth(0.3);
+  for (let c=1;c<cols;c++) doc.line(M+colW*c, y, M+colW*c, y+partyBoxH);
+  doc.line(M, y+partyBoxH, M+CW, y+partyBoxH);
+  party(M, colW, 'Billed By', bizName, [getVal('bizGstin')?('GSTIN: '+getVal('bizGstin')):'']);
+  party(M+colW, colW, 'Billed To', getVal('clientName')||'-', [getVal('clientAddress'), getVal('clientPhone'), getVal('clientGstin')?('GSTIN: '+getVal('clientGstin')):'']);
+  if (hasShipTo) party(M+colW*2, colW, 'Shipped To', getVal('shipName')||getVal('clientName')||'-', [getVal('shipAddress'), getVal('shipState'), getVal('shipGstin')?('GSTIN: '+getVal('shipGstin')):'']);
+  y += partyBoxH;
+
+  // ITEMS TABLE
+  const colNo=8, colDesc=87, colQty=18, colRate=30, colAmt=CW-colNo-87-18-30;
+  const xNo=M, xDesc=M+colNo, xQty=xDesc+colDesc, xRate=xQty+colQty, xAmt=xRate+colRate;
+  function drawHeader() {
+    doc.setFillColor(...T.lblue); doc.rect(M,y,CW,7,'F');
+    doc.setDrawColor(...T.navy); doc.setLineWidth(0.3); doc.rect(M,y,CW,7);
+    setF('bold',7,T.navy);
+    doc.text('#', xNo+2, y+4.5);
+    doc.text('DESCRIPTION', xDesc+2, y+4.5);
+    doc.text('QTY', xQty+colQty/2, y+4.5, {align:'center'});
+    doc.text('RATE', xRate+colRate-2, y+4.5, {align:'right'});
+    doc.text('AMOUNT', xAmt+colAmt-2, y+4.5, {align:'right'});
+    y += 7;
+  }
+  checkPageBreak(20); drawHeader();
+
+  if (items.length===0) { setF('normal',9,T.lgray); doc.text('No items added', M+CW/2, y+8, {align:'center'}); y+=14; }
+  else items.forEach((item,idx) => {
+    doc.setFontSize(9);
+    const descLines = doc.splitTextToSize(item.desc||'-', colDesc-6);
+    const hsnLine = item.hsn ? `HSN/SAC: ${item.hsn}` : '';
+    const contentLines = hsnLine ? descLines.length+1 : descLines.length;
+    const rowH = Math.max(contentLines*4+3, 8);
+    checkPageBreak(rowH+2);
+    doc.setDrawColor(180,180,180); doc.setLineWidth(0.2); doc.rect(M,y,CW,rowH);
+    doc.line(xDesc,y,xDesc,y+rowH); doc.line(xQty,y,xQty,y+rowH); doc.line(xRate,y,xRate,y+rowH); doc.line(xAmt,y,xAmt,y+rowH);
+    setF('normal',9,T.gray); doc.text(String(idx+1), xNo+2, y+5);
+    setF('normal',9,T.black);
+    descLines.forEach((ln,i)=>doc.text(ln, xDesc+2, y+5+i*4));
+    if (hsnLine) { setF('normal',7,T.lgray); doc.text(hsnLine, xDesc+2, y+5+descLines.length*4); }
+    const amt = (parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+    setF('normal',9,T.black);
+    doc.text(String(item.qty), xQty+colQty/2, y+5, {align:'center'});
+    doc.text(pdfMoney(parseFloat(item.price||0),s), xRate+colRate-2, y+5, {align:'right'});
+    setF('bold',9,T.black);
+    doc.text(pdfMoney(amt,s), xAmt+colAmt-2, y+5, {align:'right'});
+    y += rowH;
+  });
+
+  // GST SECTION
+  if (gstOn && gstAmt>0) {
+    checkPageBreak(30);
+    const hsn=getVal('hsnCode'), pos=getVal('placeOfSupply');
+    const typeLabel = gstType==='cgst_sgst'?'CGST + SGST':'IGST';
+    y += 3;
+    setF('bold',8,T.navy);
+    let hdr = `TAX SUMMARY (${typeLabel})`;
+    if (hsn) hdr += `  |  HSN/SAC: ${hsn}`;
+    if (pos) hdr += `  |  Place of Supply: ${pos}`;
+    doc.text(hdr, M, y); y += 6;
+    setF('normal',8,T.gray);
+    if (gstType==='cgst_sgst') {
+      const half=gstAmt/2, hr=gstRate/2;
+      doc.text(`CGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=5;
+      doc.text(`SGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=5;
+    } else {
+      doc.text(`IGST @ ${gstRate}%`, M, y); doc.text(pdfMoney(gstAmt,s), M+CW, y, {align:'right'}); y+=5;
+    }
+  }
+  y += 4;
+  doc.setDrawColor(...T.navy); doc.setLineWidth(0.3); doc.line(M,y,M+CW,y); y += 6;
+
+  // TOTALS
+  checkPageBreak(45);
+  const totW=80, totX=M+CW-totW;
+  setF('normal',9,T.gray);
+  doc.text('Subtotal', totX, y); doc.text(pdfMoney(sub,s), totX+totW, y, {align:'right'}); y+=5;
+  if (discAmt>0) {
+    setF('normal',9,T.green);
+    doc.text(discountLabel(), totX, y); doc.text('-'+pdfMoney(discAmt,s), totX+totW, y, {align:'right'}); y+=5;
+    setF('normal',9,T.gray);
+    doc.text('Taxable Amount', totX, y); doc.text(pdfMoney(taxable,s), totX+totW, y, {align:'right'}); y+=5;
+  }
+  if (gstOn) {
+    if (gstType==='cgst_sgst') { const h=gstAmt/2,hr=gstRate/2; doc.text(`CGST (${hr}%)`,totX,y);doc.text(pdfMoney(h,s),totX+totW,y,{align:'right'});y+=5; doc.text(`SGST (${hr}%)`,totX,y);doc.text(pdfMoney(h,s),totX+totW,y,{align:'right'});y+=5; }
+    else { doc.text(`IGST (${gstRate}%)`,totX,y);doc.text(pdfMoney(gstAmt,s),totX+totW,y,{align:'right'});y+=5; }
+  }
+  y += 2;
+  doc.setFillColor(...T.navy); doc.rect(totX, y, totW, 8, 'F');
+  setF('bold',10,[255,255,255]); doc.text('TOTAL DUE', totX+4, y+5.5);
+  setF('bold',12,[255,255,255]); doc.text(pdfMoney(total,s), totX+totW-4, y+5.5, {align:'right'});
+  y += 14;
+
+  // AMOUNT IN WORDS
+  checkPageBreak(10);
+  doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(...T.gray);
+  const wordsLines = doc.splitTextToSize('Amount in Words: '+amountInWords(total,s), CW);
+  wordsLines.forEach((ln,i)=>doc.text(ln, M, y+i*4));
+  y += wordsLines.length*4 + 6;
+
+  // NOTES / UPI / TERMS
+  function block(label, text) {
+    if (!text) return;
+    checkPageBreak(14);
+    setF('bold',7,T.navy); doc.text(label.toUpperCase(), M, y); y+=5;
+    setF('normal',8,T.black);
+    const raw = String(text).split('\n'); let lines=[];
+    raw.forEach(r=>lines.push(...doc.splitTextToSize(r, CW)));
+    lines.forEach((ln,i)=>doc.text(ln, M, y+i*4));
+    y += lines.length*4 + 5;
+  }
+  block('Payment Details', getVal('notes'));
+  if (getVal('upiId')) { checkPageBreak(9); setF('bold',7,T.navy); doc.text('UPI', M, y); y+=5; setF('normal',8,T.black); doc.text(getVal('upiId'), M, y); y+=7; }
+  block('Terms & Conditions', getVal('terms'));
+
+  // SIGNATURE + FOOTER
+  checkPageBreak(24);
+  y += 6;
+  doc.setDrawColor(...T.navy); doc.setLineWidth(0.3); doc.line(M,y,M+CW,y); y += 5;
+  setF('normal',8,T.lgray); doc.text('This is a computer-generated invoice.', M, y);
+  const sigX2=M+CW, sigX1=sigX2-60;
+  doc.setDrawColor(T.gray[0],T.gray[1],T.gray[2]); doc.line(sigX1,y-6,sigX2,y-6);
+  setF('bold',7,T.gray); doc.text('For '+bizName, sigX2, y-2, {align:'right'});
+  setF('normal',7,T.gray); doc.text('Authorised Signatory', sigX2, y+2, {align:'right'});
+
+  return doc;
+}
+
+// ── VECTOR PDF: COMPACT TEMPLATE ─────────────────
+async function generateCompactPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const M = 14, PW = 210, PH = 297, CW = PW - 2*M;
+  const G = { green:[45,106,79], black:[17,17,17], gray:[102,102,102], lgray:[170,170,170], lgreen:[240,250,245], border:[195,230,216] };
+  const calc = computeInvoiceCalc();
+  const { s, sub, discAmt, taxable, gstOn, gstRate, gstAmt, total, gstType } = calc;
+  const bizName = getVal('bizName') || 'Your Business';
+  let y = M;
+
+  function setF(style, size, color) { doc.setFont('helvetica', style||'normal'); doc.setFontSize(size||8.5); doc.setTextColor(...(color||G.black)); }
+  function checkPageBreak(needed) { if (y + needed > PH - 15) { doc.addPage(); y = M; } }
+
+  // HEADER
+  let hx = M;
+  if (logoDataURL) {
+    try {
+      const dims = await loadImageDims(logoDataURL);
+      const r = dims.w/dims.h; let w=22,h=22/r; if(h>11){h=11;w=11*r;}
+      doc.addImage(logoDataURL, getImageFormat(logoDataURL), M, y, w, h);
+      hx = M+w+4;
+    } catch(e) {}
+  }
+  setF('bold',13,G.black); doc.text(bizName, hx, y+5);
+  setF('normal',8,G.gray);
+  if (getVal('bizAddress')) doc.text(getVal('bizAddress'), hx, y+9);
+  if (getVal('bizGstin')) { setF('bold',8,G.green); doc.text('GSTIN: '+getVal('bizGstin'), hx, y+13); }
+
+  const rightX = PW-M;
+  setF('bold',14,G.green); doc.text('TAX INVOICE', rightX, y+5, {align:'right'});
+  setF('normal',8,G.gray);
+  doc.text(`${getVal('invoiceNo')||'-'}  |  ${fmtDate(getVal('invoiceDate'))||'-'}`, rightX, y+9, {align:'right'});
+  if (getVal('refNo')) doc.text('Ref: '+getVal('refNo'), rightX, y+13, {align:'right'});
+
+  y += 16;
+  doc.setDrawColor(...G.green); doc.setLineWidth(0.7); doc.line(M,y,M+CW,y);
+  y += 5;
+
+  // PARTIES
+  const hasShipTo = !!(getVal('shipName')||getVal('shipAddress'));
+  const cols = hasShipTo ? 3 : 2;
+  const colW = CW/cols;
+  const partyH = 20;
+  checkPageBreak(partyH+3);
+  doc.setFillColor(...G.lgreen); doc.setDrawColor(...G.border); doc.setLineWidth(0.3);
+  doc.rect(M,y,CW,partyH,'FD');
+  function party(x, w, label, name, lines) {
+    setF('bold',7,G.green); doc.text(label.toUpperCase(), x+3, y+4);
+    setF('bold',9,G.black); doc.text(name, x+3, y+8);
+    setF('normal',7.5,G.gray);
+    let ly = y+12;
+    lines.forEach(ln => { if(ln) { doc.text(ln, x+3, ly); ly += 3.5; } });
+  }
+  party(M, colW, 'From', bizName, [getVal('bizPhone'), getVal('bizEmail')]);
+  party(M+colW, colW, 'Bill To', getVal('clientName')||'-', [getVal('clientPhone'), getVal('clientAddress'), getVal('clientGstin')?('GSTIN: '+getVal('clientGstin')):'']);
+  if (hasShipTo) party(M+colW*2, colW, 'Ship To', getVal('shipName')||getVal('clientName')||'-', [getVal('shipAddress'), getVal('shipState'), getVal('shipGstin')?('GSTIN: '+getVal('shipGstin')):'']);
+  y += partyH + 5;
+
+  // ITEMS TABLE
+  const colNo=8, colDesc=88, colQty=16, colRate=32, colAmt=CW-colNo-88-16-32;
+  const xNo=M, xDesc=M+colNo, xQty=xDesc+colDesc, xRate=xQty+colQty, xAmt=xRate+colRate;
+  function drawHeader() {
+    doc.setFillColor(...G.green); doc.rect(M,y,CW,6,'F');
+    setF('bold',7,[255,255,255]);
+    doc.text('#', xNo+2, y+4);
+    doc.text('DESCRIPTION', xDesc+2, y+4);
+    doc.text('QTY', xQty+colQty/2, y+4, {align:'center'});
+    doc.text('RATE', xRate+colRate-2, y+4, {align:'right'});
+    doc.text('AMOUNT', xAmt+colAmt-2, y+4, {align:'right'});
+    y += 6;
+  }
+  checkPageBreak(18); drawHeader();
+
+  if (items.length===0) { setF('normal',9,G.lgray); doc.text('No items added', M+CW/2, y+6, {align:'center'}); y+=10; }
+  else items.forEach((item,idx) => {
+    doc.setFontSize(8.5);
+    const descLines = doc.splitTextToSize(item.desc||'-', colDesc-4);
+    const hsnSuffix = item.hsn ? ` [${item.hsn}]` : '';
+    const rowH = Math.max(descLines.length*3.8+3, 7);
+    checkPageBreak(rowH+2);
+    if (idx%2===0) { doc.setFillColor(255,255,255); } else { doc.setFillColor(...G.lgreen); }
+    doc.rect(M,y,CW,rowH,'F');
+    setF('normal',8,G.gray); doc.text(String(idx+1), xNo+2, y+4);
+    setF('normal',8.5,G.black);
+    descLines.forEach((ln,i)=>doc.text(i===descLines.length-1?ln+hsnSuffix:ln, xDesc+2, y+4+i*3.8));
+    const amt = (parseFloat(item.qty)||0)*(parseFloat(item.price)||0);
+    setF('normal',8.5,G.black);
+    doc.text(String(item.qty), xQty+colQty/2, y+4, {align:'center'});
+    doc.text(pdfMoney(parseFloat(item.price||0),s), xRate+colRate-2, y+4, {align:'right'});
+    setF('bold',8.5,G.black);
+    doc.text(pdfMoney(amt,s), xAmt+colAmt-2, y+4, {align:'right'});
+    doc.setDrawColor(...G.border); doc.setLineWidth(0.15); doc.line(M,y+rowH,M+CW,y+rowH);
+    y += rowH;
+  });
+  y += 4;
+
+  // GST SECTION
+  if (gstOn && gstAmt>0) {
+    checkPageBreak(26);
+    const hsn=getVal('hsnCode'), pos=getVal('placeOfSupply');
+    const typeLabel = gstType==='cgst_sgst'?'CGST + SGST':'IGST';
+    setF('bold',8,G.green);
+    let hdr = `TAX SUMMARY (${typeLabel})`;
+    if (hsn) hdr += `  |  HSN/SAC: ${hsn}`;
+    if (pos) hdr += `  |  Place of Supply: ${pos}`;
+    doc.text(hdr, M, y); y += 5;
+    setF('normal',8,G.gray);
+    if (gstType==='cgst_sgst') {
+      const half=gstAmt/2, hr=gstRate/2;
+      doc.text(`CGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=4.5;
+      doc.text(`SGST @ ${hr}%`, M, y); doc.text(pdfMoney(half,s), M+CW, y, {align:'right'}); y+=4.5;
+    } else {
+      doc.text(`IGST @ ${gstRate}%`, M, y); doc.text(pdfMoney(gstAmt,s), M+CW, y, {align:'right'}); y+=4.5;
+    }
+    y += 3;
+  }
+
+  // TOTALS
+  checkPageBreak(38);
+  const totW=70, totX=M+CW-totW;
+  doc.setDrawColor(...G.border); doc.setLineWidth(0.3); doc.setFillColor(...G.lgreen);
+  let totBoxH = 6 + (discAmt>0?10:0) + (gstOn?(gstType==='cgst_sgst'?9:4.5):0);
+  doc.rect(totX,y,totW,totBoxH,'FD');
+  setF('normal',8,G.gray);
+  doc.text('Subtotal', totX+3, y+4); doc.text(pdfMoney(sub,s), totX+totW-3, y+4, {align:'right'});
+  let ty = y+4;
+  if (discAmt>0) {
+    ty+=4.5; setF('normal',8,[26,127,90]); doc.text(discountLabel(), totX+3, ty); doc.text('-'+pdfMoney(discAmt,s), totX+totW-3, ty, {align:'right'});
+    ty+=4.5; setF('normal',8,G.gray); doc.text('Taxable', totX+3, ty); doc.text(pdfMoney(taxable,s), totX+totW-3, ty, {align:'right'});
+  }
+  if (gstOn) {
+    if (gstType==='cgst_sgst') { const h=gstAmt/2,hr=gstRate/2; ty+=4.5; doc.text(`CGST (${hr}%)`,totX+3,ty);doc.text(pdfMoney(h,s),totX+totW-3,ty,{align:'right'}); ty+=4.5; doc.text(`SGST (${hr}%)`,totX+3,ty);doc.text(pdfMoney(h,s),totX+totW-3,ty,{align:'right'}); }
+    else { ty+=4.5; doc.text(`GST (${gstRate}%)`,totX+3,ty);doc.text(pdfMoney(gstAmt,s),totX+totW-3,ty,{align:'right'}); }
+  }
+  y += totBoxH;
+  doc.setFillColor(...G.green); doc.rect(totX,y,totW,7,'F');
+  setF('bold',9,[255,255,255]); doc.text('TOTAL DUE', totX+3, y+4.8);
+  doc.text(pdfMoney(total,s), totX+totW-3, y+4.8, {align:'right'});
+  y += 12;
+
+  // AMOUNT IN WORDS
+  checkPageBreak(9);
+  doc.setFont('helvetica','italic'); doc.setFontSize(7.5); doc.setTextColor(...G.gray);
+  const wordsLines = doc.splitTextToSize('Amount in Words: '+amountInWords(total,s), CW);
+  wordsLines.forEach((ln,i)=>doc.text(ln, M, y+i*3.6));
+  y += wordsLines.length*3.6 + 5;
+
+  // NOTES / UPI / TERMS
+  function block(label, text) {
+    if (!text) return;
+    checkPageBreak(12);
+    setF('bold',6.5,G.green); doc.text(label.toUpperCase(), M, y); y+=4.5;
+    setF('normal',7.5,G.black);
+    const raw = String(text).split('\n'); let lines=[];
+    raw.forEach(r=>lines.push(...doc.splitTextToSize(r, CW)));
+    lines.forEach((ln,i)=>doc.text(ln, M, y+i*3.6));
+    y += lines.length*3.6 + 4;
+  }
+  block('Payment Details', getVal('notes'));
+  if (getVal('upiId')) { checkPageBreak(8); setF('bold',6.5,G.green); doc.text('UPI', M, y); y+=4.5; setF('normal',7.5,G.black); doc.text(getVal('upiId'), M, y); y+=6; }
+  block('Terms & Conditions', getVal('terms'));
+
+  // SIGNATURE + FOOTER
+  checkPageBreak(20);
+  y += 5;
+  doc.setDrawColor(...G.green); doc.setLineWidth(0.6); doc.line(M,y,M+CW,y); y += 4;
+  setF('normal',7.5,G.lgray); doc.text('This is a computer-generated invoice.', M, y);
+  const sigX2=M+CW, sigX1=sigX2-55;
+  doc.setDrawColor(G.gray[0],G.gray[1],G.gray[2]); doc.line(sigX1,y-5,sigX2,y-5);
+  setF('bold',6.5,G.gray); doc.text('For '+bizName, sigX2, y-1.5, {align:'right'});
+
+  return doc;
+}
+
+async function downloadPDF(historyLabel = 'PDF') {
   if (!validateInvoice()) return;
   updatePreview();
   saveInvoiceSeq(document.getElementById('invoiceNo').value);
-  recordHistory('PDF');
   document.getElementById('pdfOverlay').classList.add('active');
   try {
+    const genMap = { classic: generateClassicPDF, modern: generateModernPDF, traditional: generateTraditionalPDF, compact: generateCompactPDF };
+    const gen = genMap[currentTemplate];
+    if (gen) {
+      const doc = await gen();
+      doc.save((document.getElementById('invoiceNo').value||'invoice')+'.pdf');
+      recordHistory(historyLabel);
+      document.getElementById('pdfOverlay').classList.remove('active');
+      return;
+    }
     const invoiceHTML=document.getElementById('invoiceSheet').innerHTML;
     const renderZone=document.getElementById('pdfRenderZone');
     renderZone.innerHTML=`<div style="font-family:'DM Sans',sans-serif;width:794px;background:#ffffff;color:#0f0e0d;line-height:1.6;font-size:12px;">
@@ -1276,17 +2523,10 @@ async function downloadPDF() {
       }
     }
     pdf.save((document.getElementById('invoiceNo').value||'invoice')+'.pdf');
+    recordHistory(historyLabel);
     renderZone.innerHTML='';
-  } catch(err) { console.error('PDF error:',err); alert('PDF generation failed. Please try again or use Ctrl+P to print.'); }
+  } catch(err) { console.error('PDF error:',err); alert('PDF generation failed. Please try again.'); }
   finally { document.getElementById('pdfOverlay').classList.remove('active'); }
-}
-
-function printInvoice() {
-  if (!validateInvoice()) return;
-  saveInvoiceSeq(document.getElementById('invoiceNo').value);
-  recordHistory('Print');
-  updatePreview();
-  setTimeout(()=>window.print(),100);
 }
 
 // ── EXPORT / IMPORT BACKUP ────────────────────────
@@ -1330,6 +2570,126 @@ function importBackup(input) {
     input.value = '';
   };
   reader.readAsText(file);
+}
+
+// ── SHIP TO ────────────────────────────────────────
+function toggleShipTo() {
+  const sec = document.getElementById('shipToSection');
+  const btn = document.getElementById('shipToToggle');
+  const visible = sec.style.display === 'block';
+  sec.style.display = visible ? 'none' : 'block';
+  btn.style.display = visible ? 'flex' : 'none';
+  if (!visible) document.getElementById('shipName').focus();
+  updatePreview();
+}
+function clearShipTo() {
+  ['shipName','shipAddress','shipGstin'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('shipState').value = '';
+  document.getElementById('shipToSection').style.display = 'none';
+  document.getElementById('shipToToggle').style.display = 'flex';
+  document.getElementById('gstStateWarn').style.display = 'none';
+  updatePreview();
+}
+function checkGstStateWarn() {
+  const shipState = getVal('shipState');
+  const pos = getVal('placeOfSupply');
+  const warn = document.getElementById('gstStateWarn');
+  if (shipState && pos && shipState !== pos) {
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+function getShipToHTML() {
+  const name = getVal('shipName');
+  const addr = getVal('shipAddress');
+  const state = getVal('shipState');
+  const gstin = getVal('shipGstin');
+  if (!name && !addr) return '';
+  return { name, addr, state, gstin };
+}
+
+// ── HOW TO USE ─────────────────────────────────────
+// ── BUSINESS CARD ──────────────────────────────────
+function renderBusinessCard() {
+  const bizName = escHtml(getVal('bizName')) || 'Your Business';
+  const addr = getVal('bizAddress');
+  const phone = getVal('bizPhone');
+  const email = getVal('bizEmail');
+  const gstin = getVal('bizGstin');
+  const upi = getVal('upiId');
+
+  const logoHTML = logoDataURL
+    ? `<img src="${logoDataURL}" alt="Logo">`
+    : `<span style="font-size:24px">🏢</span>`;
+
+  const rows = [];
+  if (phone) rows.push(`<div class="bizcard-row"><span class="ic">📞</span><span>${escHtml(phone)}</span></div>`);
+  if (email) rows.push(`<div class="bizcard-row"><span class="ic">✉️</span><span>${escHtml(email)}</span></div>`);
+  if (upi)   rows.push(`<div class="bizcard-row"><span class="ic">📲</span><span>${escHtml(upi)}</span></div>`);
+
+  document.getElementById('bizCardSheet').innerHTML = `
+    <div class="bizcard-logo-wrap">${logoHTML}</div>
+    <div class="bizcard-name">${bizName}</div>
+    ${addr ? `<div class="bizcard-tagline">${escHtml(addr)}</div>` : ''}
+    <div class="bizcard-divider"></div>
+    ${rows.join('')}
+    ${gstin ? `<div class="bizcard-gstin">GSTIN: ${escHtml(gstin)}</div>` : ''}
+    <div class="bizcard-footer">DIGITAL BUSINESS CARD</div>
+  `;
+}
+
+function openBusinessCard() {
+  renderBusinessCard();
+  document.getElementById('bizCardOverlay').classList.add('active');
+}
+function closeBusinessCard() {
+  document.getElementById('bizCardOverlay').classList.remove('active');
+}
+
+async function renderCardToCanvas() {
+  const el = document.getElementById('bizCardSheet');
+  return await html2canvas(el, { scale: 3, backgroundColor: null, useCORS: true, allowTaint: true, logging: false });
+}
+
+async function downloadBusinessCard() {
+  try {
+    const canvas = await renderCardToCanvas();
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = (getVal('bizName') || 'business') + '-card.png';
+    a.click();
+    showToast('✓ Card downloaded', 'success');
+  } catch(e) {
+    console.error('Card download error:', e);
+    showToast('⚠ Could not generate card', 'error');
+  }
+}
+
+async function shareBusinessCard() {
+  try {
+    const canvas = await renderCardToCanvas();
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], (getVal('bizName')||'business')+'-card.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: getVal('bizName')||'Business Card', text: 'My business card' });
+          return;
+        } catch(e) { /* user cancelled share, fall through to download */ }
+      }
+      // Fallback for desktop browsers without native file sharing
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = (getVal('bizName')||'business')+'-card.png'; a.click();
+      URL.revokeObjectURL(url);
+      showToast('Card downloaded — attach it on WhatsApp manually', 'info');
+      setTimeout(() => window.open('https://wa.me/?text='+encodeURIComponent('Here is my business card — '+(getVal('bizName')||'')), '_blank'), 600);
+    }, 'image/png');
+  } catch(e) {
+    console.error('Card share error:', e);
+    showToast('⚠ Could not share card', 'error');
+  }
 }
 
 // ── HOW TO USE ─────────────────────────────────────
@@ -1523,7 +2883,11 @@ function checkTodayReminder(suppress = false) {
 
 // ── CLEAR FORM ────────────────────────────────────
 function clearForm() {
-  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo','notes','upiId','terms','hsnCode'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo','notes','upiId','terms','hsnCode','shipName','shipAddress','shipGstin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('shipState').value='';
+  document.getElementById('shipToSection').style.display='none';
+  document.getElementById('shipToToggle').style.display='flex';
+  document.getElementById('gstStateWarn').style.display='none';
   document.getElementById('gstRate').value='18';
   document.getElementById('discountType').value='percentage';
   document.getElementById('discountValue').value='0';
