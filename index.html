@@ -18,6 +18,7 @@
     --shadow-lg: 0 4px 6px rgba(15,14,13,0.05), 0 20px 60px rgba(15,14,13,0.12);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper-2); color: var(--ink); min-height: 100vh; line-height: 1.6; }
 
   .topbar { background: var(--ink); color: var(--paper); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; position: sticky; top: 0; z-index: 100; }
@@ -25,7 +26,30 @@
   .topbar-brand .dot { color: var(--accent); }
   .topbar-actions { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
 
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; }
+  /* ── MORE MENU DROPDOWN ── */
+  .more-menu-wrap { position: relative; }
+  .more-menu-dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0; min-width: 200px;
+    background: #fff; border-radius: 10px; box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+    border: 1px solid var(--paper-3); padding: 6px; z-index: 120;
+    opacity: 0; visibility: hidden; transform: translateY(-6px) scale(0.97);
+    transform-origin: top left;
+    transition: opacity 0.16s ease, visibility 0.16s ease, transform 0.16s cubic-bezier(0.16,1,0.3,1);
+  }
+  .more-menu-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  .more-menu-item {
+    display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px;
+    background: none; border: none; border-radius: 7px; cursor: pointer; text-align: left;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink-2);
+    transition: background 0.12s ease;
+  }
+  .more-menu-item:hover { background: var(--paper); }
+  .more-menu-item svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--ink-3); }
+  .more-menu-divider { height: 1px; background: var(--paper-3); margin: 6px 4px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease; white-space: nowrap; will-change: transform; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0) scale(0.97); transition-duration: 0.08s; }
   .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
   .btn-ghost { background: rgba(255,255,255,0.08); color: var(--paper); border: 1px solid rgba(255,255,255,0.15); }
   .btn-ghost:hover { background: rgba(255,255,255,0.15); }
@@ -72,16 +96,20 @@
 
   .items-header { display: grid; grid-template-columns: 3fr 0.85fr 0.7fr 1.1fr 1.1fr 64px; gap: 8px; padding: 0 0 8px; border-bottom: 1px solid var(--paper-3); margin-bottom: 10px; }
   .items-header span { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); }
-  .item-row { display: grid; grid-template-columns: 3fr 0.85fr 0.7fr 1.1fr 1.1fr 64px; gap: 8px; align-items: center; margin-bottom: 8px; animation: slideIn 0.2s ease; }
+  .item-row { display: grid; grid-template-columns: 3fr 0.85fr 0.7fr 1.1fr 1.1fr 64px; gap: 8px; align-items: center; margin-bottom: 8px; animation: slideIn 0.28s cubic-bezier(0.16,1,0.3,1); border-radius: 8px; transition: background 0.15s ease; }
+  .item-row:hover { background: rgba(200,169,110,0.04); }
   @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
   .item-row input { padding: 8px 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); background: var(--paper); border: 1px solid var(--paper-3); border-radius: 6px; outline: none; width: 100%; transition: border-color 0.15s; }
   .item-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,169,110,0.15); background: #fff; }
   .item-row .amount-display { padding: 8px 10px; font-size: 12px; font-weight: 500; color: var(--ink-2); background: var(--paper-2); border: 1px solid var(--paper-3); border-radius: 6px; text-align: right; }
   .item-actions { display: flex; align-items: center; gap: 3px; }
+  .item-field-mobile-label { display: none; }
   .move-btn { background: none; border: 1px solid var(--paper-3); border-radius: 4px; cursor: pointer; padding: 3px 5px; font-size: 10px; color: var(--ink-3); line-height: 1; transition: all 0.15s; }
   .move-btn:hover:not(:disabled) { background: var(--paper-2); color: var(--ink); }
   .move-btn:disabled { opacity: 0.25; cursor: default; }
   .add-item-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--accent-dark); background: var(--accent-light); border: 1px dashed var(--accent); border-radius: 6px; cursor: pointer; transition: all 0.15s; margin-top: 8px; }
+  .add-item-btn:hover { transform: translateY(-1px); }
+  .add-item-btn:active { transform: scale(0.97); }
   .add-item-btn:hover { background: #ecdfc4; }
 
   .totals-box { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
@@ -96,7 +124,7 @@
 
   .preview-panel { position: sticky; top: 76px; }
   .preview-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-4); margin-bottom: 10px; padding-left: 4px; }
-  .invoice-sheet { background: #fff; border-radius: 12px; box-shadow: var(--shadow-lg); overflow: hidden; font-size: 12px; line-height: 1.5; border: 1px solid var(--paper-3); }
+  .invoice-sheet { background: #fff; border-radius: 12px; box-shadow: var(--shadow-lg); overflow: hidden; font-size: 12px; line-height: 1.5; border: 1px solid var(--paper-3); transition: box-shadow 0.2s ease; }
 
   .inv-top-bar { background: var(--ink); height: 5px; }
   .inv-body { padding: 2rem; }
@@ -156,6 +184,8 @@
 
   .gst-presets { display: flex; gap: 6px; flex-wrap: wrap; }
   .preset-btn { display: flex; flex-direction: column; align-items: center; padding: 6px 12px; background: var(--paper); border: 1px solid var(--paper-3); border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink-2); transition: all 0.15s; min-width: 56px; }
+  .preset-btn:hover { transform: translateY(-1px); }
+  .preset-btn:active { transform: scale(0.96); }
   .preset-btn span { font-size: 10px; font-weight: 400; color: var(--ink-4); margin-top: 1px; }
   .preset-btn:hover { border-color: var(--accent); color: var(--accent-dark); background: var(--accent-light); }
   .preset-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
@@ -176,16 +206,17 @@
   .inv-gst-section-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-4); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .inv-gst-badge { display: inline-block; padding: 1px 6px; background: var(--accent-light); color: var(--accent-dark); border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 0.05em; }
 
-  .pdf-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.6); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-  .pdf-overlay.active { display: flex; }
-  .pdf-modal { background: #fff; border-radius: 14px; padding: 2rem 2.5rem; text-align: center; min-width: 260px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+  .pdf-overlay { display: flex; position: fixed; inset: 0; background: rgba(15,14,13,0.6); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(2px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s ease, visibility 0.22s ease; }
+  .pdf-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .pdf-modal { background: #fff; border-radius: 14px; padding: 2rem 2.5rem; text-align: center; min-width: 260px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); transform: scale(0.94) translateY(10px); transition: transform 0.28s cubic-bezier(0.16,1,0.3,1); }
+  .pdf-overlay.active .pdf-modal { transform: scale(1) translateY(0); }
   .pdf-spinner { width: 40px; height: 40px; border: 3px solid var(--paper-3); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .pdf-modal p { font-size: 14px; color: var(--ink-2); font-weight: 500; }
   .pdf-modal small { font-size: 12px; color: var(--ink-4); display: block; margin-top: 4px; }
   #pdfRenderZone { position: fixed; left: -9999px; top: 0; width: 794px; background: #fff; z-index: -1; pointer-events: none; }
 
-  .preview-toggle-btn { display: none; width: 100%; padding: 10px; background: var(--accent-light); border: 1px solid var(--accent); border-radius: 8px; color: var(--accent-dark); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; margin-bottom: 1rem; }
+  .preview-toggle-btn { display: none; position: fixed; bottom: 20px; right: 16px; left: 16px; z-index: 150; padding: 14px; background: var(--ink); border: none; border-radius: 12px; color: var(--paper); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; box-shadow: 0 8px 24px rgba(15,14,13,0.35); }
   .preview-toggle-btn:hover { background: #ecdfc4; }
 
   @media (max-width: 960px) {
@@ -195,20 +226,36 @@
     .preview-toggle-btn { display: block; }
     .topbar { padding: 0 1rem; }
     .topbar-actions { gap: 5px; }
-    .btn { padding: 7px 10px; font-size: 11px; }
+    .btn { padding: 10px 12px; font-size: 11px; min-height: 40px; }
+    .more-menu-item { padding: 12px 10px; font-size: 14px; min-height: 44px; }
+    .more-menu-dropdown { min-width: 220px; max-width: calc(100vw - 32px); }
   }
   @media (max-width: 600px) {
     .field-group.cols-2, .field-group.cols-3 { grid-template-columns: 1fr; }
     .items-header { display: none; }
-    .item-row { grid-template-columns: 1fr 1fr; }
+    .bizcard-stage { padding: 1.5rem 1rem; }
+    .bizcard-overlay { padding: 1rem 0.5rem; }
+    .item-row { grid-template-columns: 1fr; gap: 6px; background: var(--paper); border: 1px solid var(--paper-3); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+    .item-field-mobile-label { display: block; font-size: 10px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+    .item-actions { justify-content: space-between; margin-top: 4px; }
     .workspace { padding: 1rem; }
+    /* Prevent iOS Safari from auto-zooming when tapping any input/select — anything under 16px triggers it */
+    .field input, .field select, .field textarea,
+    .item-row input, .item-row select { font-size: 16px !important; }
+    /* Bigger touch targets for reorder/delete controls on line items */
+    .move-btn { padding: 8px 10px; font-size: 13px; min-width: 34px; min-height: 30px; }
+    .btn-danger-outline { padding: 10px 12px; font-size: 15px; min-width: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+    /* Topbar can hold multiple wrapped rows without clipping content beneath it */
+    .topbar { height: auto; min-height: 56px; padding-top: 8px; padding-bottom: 8px; }
+    .form-panel { padding-bottom: 76px; }
   }
   @media print {
     body { background: #fff; }
     .topbar, .form-panel, .preview-label, .preview-toggle-btn { display: none !important; }
     .workspace { display: block; padding: 0; max-width: 100%; }
     .preview-panel { position: static; display: block !important; }
-    .invoice-sheet { box-shadow: none; border: none; border-radius: 0; }
+    .invoice-sheet { box-shadow: none; border: none; border-radius: 0; height: auto !important; }
+    #invScaleWrap { transform: none !important; width: auto !important; }
     img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; max-width: 100%; }
     @page { margin: 0.5in; size: A4; }
   }
@@ -217,40 +264,52 @@
   /* ── TEMPLATE SWITCHER ── */
   .tpl-switcher { display: flex; gap: 6px; margin-bottom: 10px; }
   .tpl-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 4px; background: #fff; border: 2px solid var(--paper-3); border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; color: var(--ink-3); transition: all 0.15s; }
+  .tpl-btn:hover { transform: translateY(-2px); }
+  .tpl-btn:active { transform: scale(0.97); }
   .tpl-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
   .tpl-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent-dark); }
   .tpl-btn svg { width: 28px; height: 20px; }
 
   /* ── BUSINESS CARD MODAL ── */
-  .bizcard-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.6); z-index: 210; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
-  .bizcard-overlay.active { display: flex; }
-  .bizcard-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .bizcard-overlay { display: flex; position: fixed; inset: 0; background: rgba(15,14,13,0.6); z-index: 210; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s ease, visibility 0.22s ease; }
+  .bizcard-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .bizcard-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; transform: scale(0.94) translateY(14px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+  .bizcard-overlay.active .bizcard-modal { transform: scale(1) translateY(0); }
   .bizcard-stage { padding: 2rem 1.5rem; display: flex; justify-content: center; background: var(--paper-2); }
   .bizcard-sheet {
-    width: 320px;
-    border-radius: 20px;
+    width: 100%;
+    max-width: 340px;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    background: linear-gradient(160deg, #171512 0%, #322c24 100%);
-    color: #faf9f7;
-    padding: 2rem 1.5rem 1.75rem;
-    text-align: center;
+    box-shadow: 0 4px 20px rgba(15,14,13,0.1), 0 1px 3px rgba(15,14,13,0.08);
+    background: #ffffff;
+    color: var(--ink);
+    padding: 2.25rem 2rem;
+    text-align: left;
     font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--paper-3);
   }
-  .bizcard-logo-wrap { width: 64px; height: 64px; border-radius: 50%; background: rgba(250,249,247,0.1); border: 1.5px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; overflow: hidden; }
+  .bizcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .bizcard-logo-wrap { width: 42px; height: 42px; border-radius: 4px; background: var(--paper); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
   .bizcard-logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-  .bizcard-name { font-family: 'DM Serif Display', serif; font-size: 21px; letter-spacing: -0.01em; color: #fff; line-height: 1.25; }
-  .bizcard-tagline { font-size: 11px; color: rgba(250,249,247,0.55); margin-top: 5px; line-height: 1.5; }
-  .bizcard-divider { width: 40px; height: 2px; background: var(--accent); margin: 14px auto; border-radius: 2px; }
-  .bizcard-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: rgba(250,249,247,0.85); margin-bottom: 7px; }
-  .bizcard-row .ic { font-size: 12px; flex-shrink: 0; }
-  .bizcard-gstin { display: inline-block; margin-top: 8px; padding: 3px 10px; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.4); border-radius: 20px; font-size: 10px; letter-spacing: 0.04em; color: var(--accent); font-weight: 600; }
-  .bizcard-footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(250,249,247,0.12); font-size: 9px; color: rgba(250,249,247,0.3); letter-spacing: 0.05em; }
+  .bizcard-logo-wrap span { font-size: 16px; }
+  .bizcard-accent-line { width: 28px; height: 3px; background: var(--accent); border-radius: 2px; }
+  .bizcard-name { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; }
+  .bizcard-designation { font-size: 12px; color: var(--accent-dark); font-weight: 600; margin-top: 3px; }
+  .bizcard-bizname-sub { font-size: 12px; color: var(--ink-3); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--paper-3); font-weight: 500; }
+  .bizcard-tagline { font-size: 12px; color: var(--ink-3); margin-top: 4px; line-height: 1.5; }
+  .bizcard-divider { height: 1px; background: var(--paper-3); margin: 18px 0; }
+  .bizcard-row { display: flex; align-items: baseline; gap: 10px; font-size: 12px; color: var(--ink-2); margin-bottom: 9px; }
+  .bizcard-row .lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-4); width: 44px; flex-shrink: 0; }
+  .bizcard-gstin { margin-top: 4px; font-size: 11px; color: var(--ink-3); letter-spacing: 0.02em; }
+  .bizcard-gstin strong { color: var(--ink-2); font-weight: 600; }
+  .bizcard-footer { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--paper-3); font-size: 8.5px; color: var(--ink-4); letter-spacing: 0.08em; text-transform: uppercase; }
 
   /* ── HOW TO USE MODAL ── */
-  .htu-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
-  .htu-overlay.active { display: flex; }
-  .htu-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 720px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .htu-overlay { display: flex; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s ease, visibility 0.22s ease; }
+  .htu-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .htu-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 720px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; transform: scale(0.95) translateY(14px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+  .htu-overlay.active .htu-modal { transform: scale(1) translateY(0); }
   .htu-header { background: var(--ink); color: var(--paper); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
   .htu-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.02em; }
   .htu-body { padding: 1.5rem 2rem 2rem; max-height: 75vh; overflow-y: auto; }
@@ -267,13 +326,16 @@
   .htu-btn-row { display: flex; justify-content: center; padding: 1rem 1.5rem; border-top: var(--border); background: var(--paper); }
 
   /* ── HISTORY PANEL ── */
-  .history-overlay { display: none; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; }
-  .history-overlay.active { display: flex; }
-  .history-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 980px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; }
+  .history-overlay { display: flex; position: fixed; inset: 0; background: rgba(15,14,13,0.55); z-index: 200; align-items: flex-start; justify-content: center; padding: 2rem 1rem; backdrop-filter: blur(2px); overflow-y: auto; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s ease, visibility 0.22s ease; }
+  .history-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .history-modal { background: #fff; border-radius: 16px; width: 100%; max-width: 980px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; margin: auto; transform: scale(0.95) translateY(14px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+  .history-overlay.active .history-modal { transform: scale(1) translateY(0); }
   .history-header { background: var(--ink); color: var(--paper); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
   .history-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.02em; }
   .history-header-actions { display: flex; gap: 8px; align-items: center; }
-  .history-close { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; }
+  .history-close { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--paper); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+  .history-close:hover { transform: translateY(-1px); }
+  .history-close:active { transform: scale(0.96); }
   .history-close:hover { background: rgba(255,255,255,0.2); }
   .history-warning { background: #fff8e6; border-bottom: 1px solid #ffe0a0; padding: 10px 1.5rem; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #7a5c00; }
   .history-warning strong { font-weight: 600; }
@@ -458,22 +520,35 @@
     Invoice<span class="dot">Forge</span>
   </div>
   <div class="topbar-actions">
-    <button class="btn btn-ghost" onclick="openHowToUse()" title="How to Use">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>How to Use
-    </button>
-    <button class="btn btn-ghost" onclick="openHistory()" title="Invoice History">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>History
-    </button>
+    <div class="more-menu-wrap" id="moreMenuWrap">
+      <button class="btn btn-ghost" onclick="toggleMoreMenu()" title="More options">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>Menu
+      </button>
+      <div class="more-menu-dropdown" id="moreMenuDropdown">
+        <button class="more-menu-item" onclick="openHowToUse(); closeMoreMenu();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>How to Use</span>
+        </button>
+        <button class="more-menu-item" onclick="openHistory(); closeMoreMenu();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>History</span>
+        </button>
+        <div class="more-menu-divider"></div>
+        <button class="more-menu-item" onclick="clearForm(); closeMoreMenu();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>New Invoice</span>
+        </button>
+        <button class="more-menu-item" onclick="saveDraft(); closeMoreMenu();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Save Draft</span>
+        </button>
+        <button class="more-menu-item" onclick="duplicateInvoice(); closeMoreMenu();">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Duplicate Invoice</span>
+        </button>
+      </div>
+    </div>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importBackup(this)">
-    <button class="btn btn-ghost" onclick="clearForm()" title="Start new invoice">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>New
-    </button>
-    <button class="btn btn-ghost" onclick="saveDraft()" title="Save current draft">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save
-    </button>
-    <button class="btn btn-ghost" onclick="duplicateInvoice()" title="Duplicate this invoice">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
-    </button>
     <button class="btn btn-green" onclick="shareWhatsApp()" title="Download PDF and share on WhatsApp">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.121 1.524 5.852L.059 23.54a.5.5 0 0 0 .613.612l5.687-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.96 0-3.793-.538-5.363-1.473l-.384-.232-3.982 1.026 1.026-3.982-.233-.384A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>WhatsApp
     </button>
@@ -522,6 +597,10 @@
         <div class="field-group cols-2">
           <div class="field"><label>GSTIN</label><input type="text" id="bizGstin" placeholder="29AABCU9603R1ZX" oninput="updatePreview()"></div>
           <div class="field"><label>Phone</label><input type="text" id="bizPhone" placeholder="+91 98765 43210" oninput="updatePreview()"></div>
+        </div>
+        <div class="field-group cols-2" style="margin-top:1rem">
+          <div class="field"><label>Owner / Contact Name <span style="font-weight:400;color:var(--ink-4)">(for card)</span></label><input type="text" id="ownerName" placeholder="Akash Sood" oninput="updatePreview()"></div>
+          <div class="field"><label>Designation <span style="font-weight:400;color:var(--ink-4)">(for card)</span></label><input type="text" id="ownerDesignation" placeholder="Founder · Mutual Fund Distributor" oninput="updatePreview()"></div>
         </div>
       </div>
     </div>
@@ -745,6 +824,18 @@
 <script>
 let items = [], logoDataURL = null, itemCounter = 0, lastItemType = 'Service';
 
+// ── MORE MENU ──────────────────────────────────────
+function toggleMoreMenu() {
+  document.getElementById('moreMenuDropdown').classList.toggle('open');
+}
+function closeMoreMenu() {
+  document.getElementById('moreMenuDropdown').classList.remove('open');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('moreMenuWrap');
+  if (wrap && !wrap.contains(e.target)) closeMoreMenu();
+});
+
 // ── PREVIEW TOGGLE ─────────────────────────────────
 function togglePreviewPanel() {
   const panel = document.getElementById('previewPanel');
@@ -871,7 +962,7 @@ function validateInvoice() {
 
 // ── BUSINESS PROFILE ──────────────────────────────
 const BIZ_KEY = 'invoiceforge_bizprofile';
-const BIZ_FIELDS = ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','notes','upiId','terms','hsnCode','currency','gstType','placeOfSupply'];
+const BIZ_FIELDS = ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','ownerName','ownerDesignation','notes','upiId','terms','hsnCode','currency','gstType','placeOfSupply'];
 
 function saveBusinessProfile() {
   const profile = {};
@@ -915,7 +1006,7 @@ function loadBusinessProfile() {
 function clearBusinessProfile() {
   if (!confirm('Remove saved business profile? Your current fields will be cleared.')) return;
   localStorage.removeItem(BIZ_KEY);
-  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','notes','upiId','terms','hsnCode'].forEach(id => {
+  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','ownerName','ownerDesignation','notes','upiId','terms','hsnCode'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   removeLogo();
@@ -961,6 +1052,7 @@ window.addEventListener('DOMContentLoaded', () => {
 function collectFormData() {
   return {
     bizName:getVal('bizName'), bizAddress:getVal('bizAddress'), bizEmail:getVal('bizEmail'), bizPhone:getVal('bizPhone'), bizGstin:getVal('bizGstin'),
+    ownerName:getVal('ownerName'), ownerDesignation:getVal('ownerDesignation'),
     clientName:getVal('clientName'), clientEmail:getVal('clientEmail'), clientPhone:getVal('clientPhone'), clientAddress:getVal('clientAddress'), clientGstin:getVal('clientGstin'), refNo:getVal('refNo'),
     shipName:getVal('shipName'), shipAddress:getVal('shipAddress'), shipState:getVal('shipState'), shipGstin:getVal('shipGstin'),
     shipToVisible: document.getElementById('shipToSection')?.style.display === 'block',
@@ -974,7 +1066,7 @@ function collectFormData() {
 }
 function saveDraft() { localStorage.setItem('invoiceforge_draft', JSON.stringify(collectFormData())); showToast('✓ Draft saved','success'); }
 function loadDraftData(data) {
-  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo',
+  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','ownerName','ownerDesignation','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo',
    'shipName','shipAddress','shipState','shipGstin',
    'invoiceNo','invoiceDate','notes','upiId','terms','hsnCode','currency','gstRate','gstType','placeOfSupply'].forEach(id => {
     const el=document.getElementById(id); if(el && data[id]!==undefined) el.value=data[id];
@@ -1129,9 +1221,9 @@ function renderItems() {
         <input class="desc-input" type="text" placeholder="Item / Service description" value="${escHtml(item.desc)}" oninput="updateItemField(${item.id},'desc',this.value)">
         <input type="text" placeholder="HSN/SAC (optional)" value="${escHtml(item.hsn||'')}" oninput="updateItemField(${item.id},'hsn',this.value)" style="font-size:11px;padding:5px 8px;color:var(--ink-3);background:var(--paper);border:1px solid var(--paper-3);border-radius:5px;outline:none;width:100%">
       </div>
-      <select style="padding:7px 4px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:var(--paper);border:1px solid var(--paper-3);border-radius:6px;outline:none;width:100%" onchange="updateItemField(${item.id},'type',this.value)">${typeOpts}</select>
-      <input type="number" placeholder="1" min="0" step="1" value="${item.qty}" oninput="updateItemField(${item.id},'qty',this.value)" style="text-align:center">
-      <input type="number" placeholder="0.00" min="0" step="0.01" value="${item.price}" oninput="updateItemField(${item.id},'price',this.value)" style="text-align:right">
+      <div class="if-wrap"><span class="item-field-mobile-label">Type</span><select style="padding:7px 4px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:var(--paper);border:1px solid var(--paper-3);border-radius:6px;outline:none;width:100%" onchange="updateItemField(${item.id},'type',this.value)">${typeOpts}</select></div>
+      <div class="if-wrap"><span class="item-field-mobile-label">Qty</span><input type="number" placeholder="1" min="0" step="1" value="${item.qty}" oninput="updateItemField(${item.id},'qty',this.value)" style="text-align:center"></div>
+      <div class="if-wrap"><span class="item-field-mobile-label">Unit Price</span><input type="number" placeholder="0.00" min="0" step="0.01" value="${item.price}" oninput="updateItemField(${item.id},'price',this.value)" style="text-align:right"></div>
       <div class="amount-display">${fmtINR(amt,sym())}</div>
       <div class="item-actions">
         <div style="display:flex;flex-direction:column;gap:2px">
@@ -1563,8 +1655,30 @@ function _renderPreview() {
     case 'compact':     html = renderCompact(d); break;
     default:            html = renderClassic(d); break;
   }
-  document.getElementById('invoiceSheet').innerHTML = html;
+  document.getElementById('invoiceSheet').innerHTML =
+    `<div id="invScaleWrap" style="width:740px;transform-origin:top left;">${html}</div>`;
+  applyInvoiceScale();
 }
+
+// Scale-to-fit: renders every template at its natural desktop width, then shrinks
+// it proportionally so it always looks identical (just smaller) on narrow screens —
+// avoids needing separate responsive rules for each of the 4 templates.
+function applyInvoiceScale() {
+  const outer = document.getElementById('invoiceSheet');
+  const wrap = document.getElementById('invScaleWrap');
+  if (!outer || !wrap) return;
+  const availW = outer.clientWidth;
+  if (!availW) return; // panel not visible yet, skip until it is
+  const ratio = Math.min(1, availW / 740);
+  wrap.style.transform = `scale(${ratio})`;
+  outer.style.height = (wrap.scrollHeight * ratio) + 'px';
+}
+
+let _scaleResizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(_scaleResizeTimer);
+  _scaleResizeTimer = setTimeout(applyInvoiceScale, 120);
+});
 
 // ── PDF ─────────────────────────────────────────────
 // ── VECTOR PDF (CLASSIC TEMPLATE) — sharp, selectable text ──
@@ -1744,7 +1858,7 @@ async function generateClassicPDF() {
       const descBlockH = descLines.length*4;      // height used by description lines
       const subLineY = 4 + descBlockH + 3.5;        // gap before the small type/HSN caption
       const rowH = Math.max(subLineY + 4, 12);      // ensure bottom padding below caption
-      checkPageBreak(rowH+2);
+      if (y + rowH + 2 > PH - 15) { doc.addPage(); drawTopBar(); y = 14; drawTableHeader(); }
       setF('normal',9,C.ink2);
       descLines.forEach((ln,i) => doc.text(ln, xDesc+1, y+4+i*4));
       setF('normal',6.5,C.ink4);
@@ -1967,7 +2081,7 @@ async function generateModernPDF() {
     const subLine = `${item.type||'Service'}${item.hsn?(' - HSN/SAC: '+item.hsn):''}`;
     const subY = descLines.length*4 + 3.5;
     const rowH = Math.max(subY+4, 12);
-    checkPageBreak(rowH+2);
+    if (y + rowH + 2 > PH - 15) { doc.addPage(); y = 15; drawHeader(); }
     setF('normal',9,K.dark);
     descLines.forEach((ln,i) => doc.text(ln, xDesc+1, y+i*4));
     setF('normal',6.5,K.lgray); doc.text(subLine, xDesc+1, y+subY);
@@ -2160,7 +2274,7 @@ async function generateTraditionalPDF() {
     const hsnLine = item.hsn ? `HSN/SAC: ${item.hsn}` : '';
     const contentLines = hsnLine ? descLines.length+1 : descLines.length;
     const rowH = Math.max(contentLines*4+3, 8);
-    checkPageBreak(rowH+2);
+    if (y + rowH + 2 > PH - 20) { doc.addPage(); pageOuterBorder(); y = M+4; drawHeader(); }
     doc.setDrawColor(180,180,180); doc.setLineWidth(0.2); doc.rect(M,y,CW,rowH);
     doc.line(xDesc,y,xDesc,y+rowH); doc.line(xQty,y,xQty,y+rowH); doc.line(xRate,y,xRate,y+rowH); doc.line(xAmt,y,xAmt,y+rowH);
     setF('normal',9,T.gray); doc.text(String(idx+1), xNo+2, y+5);
@@ -2335,7 +2449,7 @@ async function generateCompactPDF() {
     const descLines = doc.splitTextToSize(item.desc||'-', colDesc-4);
     const hsnSuffix = item.hsn ? ` [${item.hsn}]` : '';
     const rowH = Math.max(descLines.length*3.8+3, 7);
-    checkPageBreak(rowH+2);
+    if (y + rowH + 2 > PH - 15) { doc.addPage(); y = M; drawHeader(); }
     if (idx%2===0) { doc.setFillColor(255,255,255); } else { doc.setFillColor(...G.lgreen); }
     doc.rect(M,y,CW,rowH,'F');
     setF('normal',8,G.gray); doc.text(String(idx+1), xNo+2, y+4);
@@ -2545,10 +2659,7 @@ function exportBackup() {
   }
   const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'invoiceforge-backup-' + new Date().toISOString().split('T')[0] + '.json';
-  a.click();
+  triggerDownload(url, 'invoiceforge-backup-' + new Date().toISOString().split('T')[0] + '.json');
   URL.revokeObjectURL(url);
   showToast('✓ Backup exported', 'success');
 }
@@ -2613,6 +2724,8 @@ function getShipToHTML() {
 // ── BUSINESS CARD ──────────────────────────────────
 function renderBusinessCard() {
   const bizName = escHtml(getVal('bizName')) || 'Your Business';
+  const ownerName = escHtml(getVal('ownerName'));
+  const designation = escHtml(getVal('ownerDesignation'));
   const addr = getVal('bizAddress');
   const phone = getVal('bizPhone');
   const email = getVal('bizEmail');
@@ -2621,21 +2734,32 @@ function renderBusinessCard() {
 
   const logoHTML = logoDataURL
     ? `<img src="${logoDataURL}" alt="Logo">`
-    : `<span style="font-size:24px">🏢</span>`;
+    : `<span>🏢</span>`;
 
   const rows = [];
-  if (phone) rows.push(`<div class="bizcard-row"><span class="ic">📞</span><span>${escHtml(phone)}</span></div>`);
-  if (email) rows.push(`<div class="bizcard-row"><span class="ic">✉️</span><span>${escHtml(email)}</span></div>`);
-  if (upi)   rows.push(`<div class="bizcard-row"><span class="ic">📲</span><span>${escHtml(upi)}</span></div>`);
+  if (phone) rows.push(`<div class="bizcard-row"><span class="lbl">Phone</span><span>${escHtml(phone)}</span></div>`);
+  if (email) rows.push(`<div class="bizcard-row"><span class="lbl">Email</span><span>${escHtml(email)}</span></div>`);
+  if (upi)   rows.push(`<div class="bizcard-row"><span class="lbl">UPI</span><span>${escHtml(upi)}</span></div>`);
+
+  // If an owner name is given, lead with the person (name + designation), business name becomes secondary.
+  // Otherwise, lead with the business name as before.
+  const headingHTML = ownerName
+    ? `<div class="bizcard-name">${ownerName}</div>
+       ${designation ? `<div class="bizcard-designation">${designation}</div>` : ''}
+       <div class="bizcard-bizname-sub">${bizName}</div>`
+    : `<div class="bizcard-name">${bizName}</div>`;
 
   document.getElementById('bizCardSheet').innerHTML = `
-    <div class="bizcard-logo-wrap">${logoHTML}</div>
-    <div class="bizcard-name">${bizName}</div>
+    <div class="bizcard-top">
+      <div class="bizcard-logo-wrap">${logoHTML}</div>
+      <div class="bizcard-accent-line"></div>
+    </div>
+    ${headingHTML}
     ${addr ? `<div class="bizcard-tagline">${escHtml(addr)}</div>` : ''}
     <div class="bizcard-divider"></div>
     ${rows.join('')}
-    ${gstin ? `<div class="bizcard-gstin">GSTIN: ${escHtml(gstin)}</div>` : ''}
-    <div class="bizcard-footer">DIGITAL BUSINESS CARD</div>
+    ${gstin ? `<div class="bizcard-gstin"><strong>GSTIN</strong> &nbsp;${escHtml(gstin)}</div>` : ''}
+    <div class="bizcard-footer">Digital Business Card</div>
   `;
 }
 
@@ -2652,14 +2776,29 @@ async function renderCardToCanvas() {
   return await html2canvas(el, { scale: 3, backgroundColor: null, useCORS: true, allowTaint: true, logging: false });
 }
 
+function canvasToBlobAsync(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Canvas produced an empty image')), 'image/png');
+  });
+}
+
+function triggerDownload(url, filename) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 async function downloadBusinessCard() {
   try {
     const canvas = await renderCardToCanvas();
-    const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = (getVal('bizName') || 'business') + '-card.png';
-    a.click();
+    const blob = await canvasToBlobAsync(canvas);
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, (getVal('bizName') || 'business') + '-card.png');
+    URL.revokeObjectURL(url);
     showToast('✓ Card downloaded', 'success');
   } catch(e) {
     console.error('Card download error:', e);
@@ -2670,22 +2809,26 @@ async function downloadBusinessCard() {
 async function shareBusinessCard() {
   try {
     const canvas = await renderCardToCanvas();
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], (getVal('bizName')||'business')+'-card.png', { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: getVal('bizName')||'Business Card', text: 'My business card' });
-          return;
-        } catch(e) { /* user cancelled share, fall through to download */ }
+    const blob = await canvasToBlobAsync(canvas);
+    const file = new File([blob], (getVal('bizName')||'business')+'-card.png', { type: 'image/png' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: getVal('bizName')||'Business Card', text: 'My business card' });
+        showToast('✓ Card shared', 'success');
+        return;
+      } catch(shareErr) {
+        if (shareErr.name === 'AbortError') return; // user cancelled the share sheet — don't fall back
+        // any other native share failure falls through to the manual download+WhatsApp path below
       }
-      // Fallback for desktop browsers without native file sharing
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = (getVal('bizName')||'business')+'-card.png'; a.click();
-      URL.revokeObjectURL(url);
-      showToast('Card downloaded — attach it on WhatsApp manually', 'info');
-      setTimeout(() => window.open('https://wa.me/?text='+encodeURIComponent('Here is my business card — '+(getVal('bizName')||'')), '_blank'), 600);
-    }, 'image/png');
+    }
+
+    // Fallback for browsers without native file sharing (mainly desktop)
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, (getVal('bizName')||'business')+'-card.png');
+    URL.revokeObjectURL(url);
+    showToast('✓ Card image downloaded — attach it manually in WhatsApp', 'info');
+    setTimeout(() => window.open('https://wa.me/?text='+encodeURIComponent('Sharing my business card — see the attached image.'), '_blank'), 900);
   } catch(e) {
     console.error('Card share error:', e);
     showToast('⚠ Could not share card', 'error');
@@ -2856,10 +2999,7 @@ function exportHistoryExcel() {
   const csv = '\uFEFF' + headers.map(escape).join(',') + '\n' + rows.join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'InvoiceForge-History-' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click();
+  triggerDownload(url, 'InvoiceForge-History-' + new Date().toISOString().split('T')[0] + '.csv');
   URL.revokeObjectURL(url);
   showToast('✓ History exported to Excel', 'success');
 }
@@ -2883,7 +3023,7 @@ function checkTodayReminder(suppress = false) {
 
 // ── CLEAR FORM ────────────────────────────────────
 function clearForm() {
-  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo','notes','upiId','terms','hsnCode','shipName','shipAddress','shipGstin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['bizName','bizAddress','bizEmail','bizPhone','bizGstin','ownerName','ownerDesignation','clientName','clientEmail','clientPhone','clientAddress','clientGstin','refNo','notes','upiId','terms','hsnCode','shipName','shipAddress','shipGstin'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('shipState').value='';
   document.getElementById('shipToSection').style.display='none';
   document.getElementById('shipToToggle').style.display='flex';
